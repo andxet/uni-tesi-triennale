@@ -1,5 +1,5 @@
 % !TEX encoding = UTF-8 Unicode
-\documentclass[a4paper,12pt,italian,oneside]{book}   	% use "amsart" instead of "article" for AMSLaTeX format
+\documentclass[a4paper,12pt,italian,twoside]{book}   	% use "amsart" instead of "article" for AMSLaTeX format
 %\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
 \usepackage{graphicx}				% Use pdf, png, jpg, or epsß with pdflatex; use eps in DVI mode
 								% TeX will automatically convert eps --> pdf in pdflatex		
@@ -12,10 +12,11 @@
 
 %\setcounter{tocdepth}{1}			% Setta la profondità dell'indice
 
-\title{Titolo}
+\title{Un titolo fantasioso}
 \author{Andrea Peretti}
-%\date{}							% Activate to display a given date or no date
+\date{\today}							% Activate to display a given date or no date
 
+\includeonly{cap1}
 
 \begin{document}
 
@@ -23,16 +24,16 @@
 \tableofcontents
 
 %%%%%%%%
-\input{capitolo1/cap1}
+\include{cap1}
 
 %%%%%%%%
-\input{capitolo2/cap2}
+\include{cap2}
 
 %%%%%%%%
-\input{capitolo3/cap3}
+\include{cap3}
 
 %%%%%%%%
-\input{capitolo4/cap4}
+\include{cap4}
 
 
 \end{document} 
