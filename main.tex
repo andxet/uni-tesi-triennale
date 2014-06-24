@@ -1,7 +1,7 @@
 % !TEX encoding = UTF-8 Unicode
 \documentclass[a4paper,12pt,italian,twoside]{book}   	% use "amsart" instead of "article" for AMSLaTeX format
 %\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
-\usepackage{graphicx}				% Use pdf, png, jpg, or epsß with pdflatex; use eps in DVI mode
+\usepackage[pdftex]{graphicx}			% Use pdf, png, jpg, or epsß with pdflatex; use eps in DVI mode
 								% TeX will automatically convert eps --> pdf in pdflatex		
 \usepackage{amssymb}
 \usepackage[italian]{babel}			% Traduce in italiano tutte le parti
@@ -12,11 +12,18 @@
 
 %\setcounter{tocdepth}{1}			% Setta la profondità dell'indice
 
+%\DeclareUnicodeCharacter{00A0}{~}	%Evita l'errore " Package inputenc Error: Unicode char \u8: not set up for use with LaTeX."
+
+%\usepackage[fixlanguage]{babelbib}
+\usepackage[safeinputenc,backend=biber]{biblatex}
+\addbibresource{BigData.bib}
+%\selectbiblanguage{italian}
+
 \title{Un titolo fantasioso}
 \author{Andrea Peretti}
 \date{\today}							% Activate to display a given date or no date
 
-\includeonly{cap1}
+%\includeonly{cap1}
 
 \begin{document}
 
@@ -34,6 +41,9 @@
 
 %%%%%%%%
 \include{cap4}
+
+%%%%%%%%Bibliografia
+\printbibliography
 
 
 \end{document} 

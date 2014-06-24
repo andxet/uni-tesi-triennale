@@ -1,34 +1,16 @@
 % !TEX encoding = UTF-8 Unicode
 
-\chapter{Presentazione del progetto}
-
-\section{Descrizione}
-\emph{Piedmont Heritage} è il progetto finale sviluppato durante il corso \emph{Big Dive 2}\footnote{Il sito di Big Dive è \url{http://www.bigdive.eu}} dal sottoscritto insieme con \emph{Maximilien Rzepka} e \emph{Marco Sors}. \`{E} possibile visualizzare il progetto online all'indirizzo \url{http://piedmontheritage.bigdive.eu}, la cui versione è attualmente quella precedente alle modifiche descritte in questo testo.
-
-Il sito mostra una serie di "slide" in cui vengono visualizzate informazioni su locali ed oggetti storici presenti in Piemonte. Partendo dall'alto è presente una mappa che visualizza l'ubicazione dei locali ed a seguire una serie di infografiche rappresentanti le categorie dei locali presenti, il periodo in cui sono nati, ed infine un grafico sulle tipologie di oggetti, il inframmezzato da citazioni e detti popolari inerenti a Torino ed al Piemonte.
-
-\section{Contesto in cui il progetto è stato realizzato}
-Piedmont Heritage è stato sviluppato nell'ultima settimana di Big Dive, come prova finale in cui si sarebbero utilizzati tutti i concetti e gli strumenti presentati durante il corso. Dal sito del corso, \begin{quote}
-BIG DIVE è un programma di formazione volto a promuovere una nuova generazione di sviluppatori.
-Una palestra combattimento da strada, dove dataset di alto valore sono la materia prima nelle mani di un gruppo di appassionati seguiti da esperti in tre aree chiave: 
-Development, Data Science and Visualization.
-\end{quote}
-La nascita di questo progetto è stata dettata dallo spirito del corso: scegliere dei compagni di lavoro, scegliere un dataset tra quelli messi a disposizione, capire che cosa offre il dataset ed elaborare dei dati da esso, utilizzando la creatività del gruppo.
-
-Durante il corso sono stati affrontati argomenti inerenti ai Big Data, dal calcolo di statistiche basate sulle basi di dati alla visualizzazione di quest'ultime in modo \emph{bello}, \emph{immediato} ed \emph{esaustivo}. Sarà quest'ultima parte l'argomento di questo testo, dove si affrontaterà il problema di \emph{come visualizzare i dati su una mappa}.
-
-\section{Il dataset}
-Il dataset utilizzato è il \textbf{Guarini Dataset}, il quale è un progetto della Regione Piemonte nato ai fini di \begin{quote}%??Visualizzare il link?? ??Utilizzare quotation?? 
-migliorare la definizione dei programmi di intervento, salvaguardia e valorizzazione.\footnote{Tratto dal sito ufficiale della Regione: \url{http://www.regione.piemonte.it/cultura/guarinipat/index.htm}}
-\end{quote}%Il dataset ci è stato fornito come due file di foglio elettronico, contenenti rispettivamente i locali e gli oggetti.
-Il Sistema Informativo Guarini è il software fornito dalla Regione Piemonte utilizzato per il censimento sancito dall'art. 2 della L.R. 34/95\footnote{\url{http://arianna.consiglioregionale.piemonte.it/base/leggi/l1995034.html}} e L.R 35/95\footnote{\url{http://arianna.consiglioregionale.piemonte.it/base/leggi/l1995035.html}}. I locali storici presenti nel dataset sono selezionati dai consigli comunali appartenenti al luogo in cui si trovano, e vengono censiti solo se meritevoli. L'aggiunta dei dati al dataset è caratterizzata da una grande libertà nel tipo di informazioni inseribili, inoltre ogni record è inserito da persone diverse, con la conseguenza di una frammentazione dei dati presenti nel database, con campi non compilati e campi ad-hoc per alcune entry.
-\subsection{Una nota a proposito del database}
-Anche se il corso tratta i \emph{Big Data}\footnote{Con Big Data si intende una mole enorme di dati e gli strumenti per poter lavorare su di essa, verranno descritti nel capitolo~\ref{sec:bigdata}} il dataset è molto ristretto, conta infatti circa 1200 entry, che dopo essere state selezionate e corrette sono scese a circa 900. Alla fine del corso per questo motivo il progetto non era ottimizzato nel caso in cui il numero di entry fosse aumentato, cosa a cui si è provveduto successivamente a scopo didattico. Inoltre, con un numero così basso di elementi non è stato necessario utilizzare i metodi studiati per l'elaborazione di grandi moli di dati visti nel corso, per questo motivo nei prossimi capitoli se ne accennerà solamente.
-
-
-\section{La mappa}
-La parte che verrà analizzata è quella della prima slide, la \emph{mappa dei locali}. Durante lo sviluppo l'obbiettivo è stato trovare ed utilizzare uno strumento che permettesse di \emph{visualizzare dei segnalini} su di una mappa in corrispondenza dei locali memorizzati nel dataset, \emph{filtrare} quali risultati visualizzare e mostrare i \emph{dettagli del locale} il cui segnalino è stato cliccato.
-Per farlo sono stati utilizzati alcuni strumenti presentati nel corso, mentre altri sono stati scelti liberamente.
-\subsection{Miglioramenti dopo Big Dive}
-Durante l'A.A. successivo a quello dello stage, sono stati effettuati dei miglioramenti alla mappa della prima slide di Piedmont Heritage da parte dell'autore, permettendo una maggiore libertà per il filtraggio dei risultati, migliorando la navigazione tra di essi, implementando un sistema per ottenere dati dal server in modo asincrono con il caricamento della pagina e risolvendo un bug.
-Il sito inoltre è ora servito tramite un framework presentato durante lo stage: queste modifiche sono state effettuate per rendere il progetto utilizzabile per basi di dati più grosse, come descritto nei prossimi capitoli, ma anche a scopo didattico in modo da utilizzare altri strumenti presentati nel corso.
+\chapter{Introduzione}
+L'informatica è il settore tecnologico che si evolve con maggiore velocità, basti pensare che, la Prima legge di Moore\footnote{La prima legge di Moore è un'osservazione empirica di Gordon Moore, cofondatore \emph{Fairchild Semiconductor} e di \emph{Intel}.}, asserisce che la potenza dei calcolatori raddoppia ogni diciotto mesi. Una simile progressione in un settore tecnologico assai più anziano come l'aeronautica, permetterebbe oggi di fare un giro completo della terra in una manciata di secondi. Questa potenza di calcolo permette lo sviluppo di applicazioni impensabili fino ad una decina di anni fa, con un insieme di dati da elaborare estremamente grande. Un esempio significativo è l'ammontare di dati che viene generato ogni secondo dai sensori dell'acceleratore di particelle del CERN di Ginevra, secondo questa fonte \cite{presentation_cern} circa 15 PetaByte l'anno, i quali devono essere memorizzati e poi elaborati. Il web tutt'oggi genera dati analoghi, ogni giorno vengono memorizzati diversi terabyte di dati a seguito di ricerche, acquisti, pubblicazione di contenuti sui social network, eccetera. 
+\begin{figure}[r]
+	\centering
+	\includegraphics[width=0.48\textwidth]{Data-in-One-Minute.jpg}
+	\caption{A simple caption}
+	\label{data_per_minute}
+\end{figure}
+L'infografica nella figura \ref{data_per_minute}\footnote{\url{http://www.visualnews.com/2012/06/19/how-much-data-created-every-minute/?view=infographic}} ci permette di vedere con immediatezza di quali quantità stiamo parlando, e possiamo evincere che per una tale mole di informazioni occorrono delle procedure di trattamento dell'informazione diverse da quelle che possono essere adottate da un semplice programma per gestire una semplice rubrica. Stiamo parlando quindi di diversi GigaByte se non TeraByte di dati, che hanno bisogno di essere analizzati e processati in tempo modesto. I tipi di elaborazione necessari possono essere il calcolo di statistiche, una suddivisione per categoria, un'interrogazione della base di dati, oppure una serie di calcoli che possono permettere ad un'azienda di capire, in base agli acquisti dei suoi clienti, i trend riguardo alcuni suoi prodotti. Le tecniche elaborate nel corso degli anni hanno portato alla nascita di una nuova branca dell'informatica, quella dei \emph{Big Data}. Secondo \cite{rezzani2013big} una definizione di Big Data può essere:
+\begin{quotation}
+I BigData sono dati che superano i limiti degli strumenti di database tradizionali.
+\end{quotation}
+Con questo termine però non si intendono solo i dataset di grandi dimensioni, ma anche le tecniche utilizzate per elaborarli ed estrarre informazioni significative da esso.
+Chiariamo l'\emph{obbiettivo} di questo processo, ossia la possibilità di poter elaborare delle informazioni significative 
