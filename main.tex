@@ -3,9 +3,10 @@
 %\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
 \usepackage[pdftex]{graphicx}			% Use pdf, png, jpg, or epsß with pdflatex; use eps in DVI mode
 								% TeX will automatically convert eps --> pdf in pdflatex		
-\usepackage{amssymb}
-\usepackage[italian]{babel}			% Traduce in italiano tutte le parti
+%\usepackage{amssymb}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}			% Permette l'inserimento di caratteri in UTF-8
+\usepackage[italian]{babel}			% Traduce in italiano tutte le parti
 
 \usepackage{hyperref}				% Per rendere cliccabile l'indice
 \hypersetup{colorlinks=true,linkcolor=blue}
@@ -14,10 +15,10 @@
 
 %\DeclareUnicodeCharacter{00A0}{~}	%Evita l'errore " Package inputenc Error: Unicode char \u8: not set up for use with LaTeX."
 
-%\usepackage[fixlanguage]{babelbib}
-\usepackage[safeinputenc,backend=biber]{biblatex}
-\addbibresource{BigData.bib}
-%\selectbiblanguage{italian}
+\usepackage[fixlanguage]{babelbib}
+%\usepackage[safeinputenc,backend=biber]{biblatex}
+%\addbibresource{BigData.bib}
+\selectbiblanguage{italian}
 
 \title{Un titolo fantasioso}
 \author{Andrea Peretti}
@@ -43,7 +44,9 @@
 \include{cap4}
 
 %%%%%%%%Bibliografia
-\printbibliography
-
+%\printbibliography
+\bibliography{BigData}
+\bibliographystyle{plain}
+\nocite{*}
 
 \end{document} 
