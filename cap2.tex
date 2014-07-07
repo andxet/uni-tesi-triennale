@@ -1,19 +1,45 @@
 % !TEX encoding = UTF-8 Unicode
 \chapter{Concetti}%Decidere se trasformare in un capitolo di teoria, in cui si parla anche del pattern MVC
+In questo capitolo verranno trattati alcuni concetti teorici la cui conoscenza è necessaria per fornire un quadro generale degli argomenti trattati. Si parlerà del \emph{modello client/server} il quale è alla base del funzionamento di un sito web, in cui un calcolatore chiamato \emph{server} ha il compito di fornire ai calcolatori chiamati \emph{client} i dati richiesti, oppure eseguire delle operazioni per loro. Si parlerà del \emph{pattern MVC}, un metodo di strutturazione del software molto utilizzato. Si parlerà infine dei \emph{BigData} e delle tre parti trattate nel capitolo \ref{cap:introduzione}.
+\section{Modello Client/server}%Veramente serve??
+Veramente serve?
+
+\section{Pattern MVC}
+In informatica un pattern è TODO: inserire una definizione tratta da un libro e la sua citazione nella bibliografia
+Il pattern MVC si occupa di definire una struttura per il software che divide e rende autonome le parti di visualizzazione, elaborazione e memorizzazione dei dati.
+TODO: Inserire una figura che rappresenta il pattern mvc.
+Questa struttura offre notevoli vantaggi in termini di pulizia, estensione e mantenimento del codice. Il codice viene diviso in più parti ognuno delle quali sarà un Il programma sarà più pulito siccome in ogni sorgente sarà presente solamente il codice che si occupa di uno specifico compito. Non si presenterà quindi una situazione in cui nella stessa parte di codice oltre ad elaborare i dati ci dobbiamo preoccupare di formattarli per la presentazione su schermo, perché sarà compito della \emph{View}. L'aggiunta do nuove funzioni al software è molto semplice, per effettuare delle modifiche è spesso necessario aggiungere poche righe di codice in ogni parte del programma, senza il bisogno di stravolgerne la struttura. Il mantenimento del software risulta più semplice grazie alla suddivisione del codice in base al ruolo ed alla conseguente leggibilità.
+\subsection{Model}
+Il model, o \emph{modello} è la parte che si occupa della memorizzazione dei dati dell'applicazione, fornendo delle funzioni per salvare, leggere e modificare i dati dalla base dei dati. Le funzioni fornite sono l'\emph{interfaccia} attraverso cui il resto del programma può interagire con i dati dell'applicazione, non è possibile farlo direttamente sul database oppure in altri modi: rappresenta quindi uno strato al di sopra della base di dati, che ha il compito di fornire metodi ad alto livello per l'accesso ai dati, e di proteggere gli stessi da errori di programmazione comportati dall'accesso diretto.
+\subsection{Controller}
+\subsection{View}
+La View è la parte che si occupa della \emph{visualizzazione} dei dati forniti dal controller. Essa utilizza nel sorgente dei \emph{placeholder} che verranno sostituiti a runtime dai dati.
+Un esempio in campo web, potrebbe essere una semplice pagina che saluta il cliente e visualizza un elenco di prodotti in vendita:
+\begin{verbatim}
+#View
+Ciao {{nome}}!
+Oggi in vendita abbiamo: {{for frutto in frutti}}
+\end{verbatim}
+Le parti tra le doppie parentesi graffe\footnote{La sintassi di questo esempio è ispirata a TODO: Cosa? chiamato Mustache TODO: Link al sito nella bibliografia} sono i placeholder, i quali possono contenere anche semplici istruzioni di ciclo o di confronto. Nel momento dell'esecuzione queste verranno sostituite con i dati indicati. Questo è necessario perché al momento della scrittura del programma le variabili "nome" e "frutti" non sono ancora stati calcolati!
+Se i dati forniti dal controller sono questi:
+\begin{verbatim}
+#Controller
+nome="Andrea"
+frutti=['pere', 'mele', 'arancie']
+\end{verbatim}
+Il risultato dell'esecuzione sarà quindi:
+\begin{verbatim}
+#Risultato dell'esecuzione:
+Ciao Andrea!
+Oggi in vendita abbiamo: pere mele arancie
+\end{verbatim}
+
 
 \section{Big Data}\label{sec:bigdata}
 I Big Data
 \begin{quotation}
 sono dati che superano i limiti degli strumenti di database tradizionali.\footnote{\cite{rezzani2013big}}
 \end{quotation} 
-		
 \subsection{Acquisizione}
 \subsection{Elaborazione}
 \subsection{Visualizzazione}
-\section{Modello Client/server}%Veramente serve??
-\section{Pattern MVC}
-\subsection{Model}
-\subsection{View}
-\subsection{Controller}
-	
-	
