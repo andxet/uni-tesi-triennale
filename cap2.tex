@@ -12,6 +12,17 @@ Questa struttura offre notevoli vantaggi in termini di pulizia, estensione e man
 \subsection{Model}
 Il model, o \emph{modello} è la parte che si occupa della memorizzazione dei dati dell'applicazione, fornendo delle funzioni per salvare, leggere e modificare i dati dalla base dei dati. Le funzioni fornite sono l'\emph{interfaccia} attraverso cui il resto del programma può interagire con i dati dell'applicazione, non è possibile farlo direttamente sul database oppure in altri modi: rappresenta quindi uno strato al di sopra della base di dati, che ha il compito di fornire metodi ad alto livello per l'accesso ai dati, e di proteggere gli stessi da errori di programmazione comportati dall'accesso diretto.
 \subsection{Controller}
+Questa sezione si occupa di interfacciarsi con le altre due. Un controller in genere riceve le richieste dell'utente sotto forma di chiamate a funzioni e si occupa di eseguirle, preoccupandosi della validazione e della coerenza dei dati. Esso può essere un tramite tra \emph{View} e \emph{Model}, oppure operare solo con uno di loro:
+\begin{itemize}
+	\item Aggiunta di nuovi dati o modifica di dati esistenti
+	
+	Quando l'utente inserisce alcuni dati in un form e desidera che vengano memorizzati sul database, la View incapsula i dati inseriti in opportune strutture dati che verranno passate al controller, il quale effettuerà i controlli necessari per verificare che i dati non contengano errori, assicurarsi che non confliggano con quelli memorizzati, per poi inoltrare una richiesta di memorizzazione al Model, il quale eseguirà in modo del tutto trasparente al Controller l'operazione. Infine, il Controller invierà una conferma o l'errore alla View, in modo di informare l'utente su cosa ha fatto il sistema.
+	\item Visualizzazione di dati
+	
+	In questo caso, la view invia una richiesta contenente le informazioni riguardanti a quali dati l'utente desidera visualizzare al Controller, quest'ultimo si occupa di verificare se l'utente è autorizzato ad accedere a quei dati restituendo errore nel caso in cui non sia autorizzato, oppure, se il Model supporta un sistema di gestione dei permessi ad utenti, inoltra la richiesta al model aggiungendo le informazioni sull'identità dell'utente.Il Model a questo punto provvederà a recuperare i dati e restituirli al Controller, effettuare alcune operazioni su di loro se necessario, per poi inviarle alla View.
+\end{itemize}
+
+I Controller sono quindi quelle parti del programma che si trovano tra l'interfaccia utente e la base di dati, che si occupano di coordinare le altre due componenti. Il loro compito è eseguire le richieste degli utenti, utilizzando le interfacce fornite da View e Model per portarle a termine, ma preoccupandosi anche dei controlli sui dati che transitano in essi.
 \subsection{View}
 La View è la parte che si occupa della \emph{visualizzazione} dei dati forniti dal controller. Essa utilizza nel sorgente dei \emph{placeholder} che verranno sostituiti a runtime dai dati.
 Un esempio in campo web, potrebbe essere una semplice pagina che saluta il cliente e visualizza un elenco di prodotti in vendita:
