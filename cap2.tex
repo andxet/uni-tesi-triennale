@@ -1,16 +1,20 @@
 % !TEX encoding = UTF-8 Unicode
 \chapter{Concetti}%Decidere se trasformare in un capitolo di teoria, in cui si parla anche del pattern MVC
 In questo capitolo verranno trattati alcuni concetti teorici la cui conoscenza è necessaria per fornire un quadro generale degli argomenti trattati. Si parlerà del \emph{modello client/server} il quale è alla base del funzionamento di un sito web, in cui un calcolatore chiamato \emph{server} ha il compito di fornire ai calcolatori chiamati \emph{client} i dati richiesti, oppure eseguire delle operazioni per loro. Si parlerà del \emph{pattern MVC}, un metodo di strutturazione del software molto utilizzato. Si parlerà infine dei \emph{BigData} e delle tre parti trattate nel capitolo~ \ref{cap:introduzione}.
-\section{Modello Client/server}%Veramente serve??
-Veramente serve?
+
+
 
 \section{Pattern MVC}
 In informatica un pattern è TODO: inserire una definizione tratta da un libro e la sua citazione nella bibliografia
 Il pattern MVC si occupa di definire una struttura per il software che divide e rende autonome le parti di visualizzazione, elaborazione e memorizzazione dei dati.
 TODO: Inserire una figura che rappresenta il pattern mvc.
 Questa struttura offre notevoli vantaggi in termini di pulizia, estensione e mantenimento del codice. Il codice viene diviso in più parti ognuno delle quali sarà un Il programma sarà più pulito siccome in ogni sorgente sarà presente solamente il codice che si occupa di uno specifico compito. Non si presenterà quindi una situazione in cui nella stessa parte di codice oltre ad elaborare i dati ci dobbiamo preoccupare di formattarli per la presentazione su schermo, perché sarà compito della \emph{View}. L'aggiunta do nuove funzioni al software è molto semplice, per effettuare delle modifiche è spesso necessario aggiungere poche righe di codice in ogni parte del programma, senza il bisogno di stravolgerne la struttura. Il mantenimento del software risulta più semplice grazie alla suddivisione del codice in base al ruolo ed alla conseguente leggibilità.
+
+
 \subsection{Model}
 Il model, o \emph{modello} è la parte che si occupa della memorizzazione dei dati dell'applicazione, fornendo delle funzioni per salvare, leggere e modificare i dati dalla base dei dati. Le funzioni fornite sono l'\emph{interfaccia} attraverso cui il resto del programma può interagire con i dati dell'applicazione, non è possibile farlo direttamente sul database oppure in altri modi: rappresenta quindi uno strato al di sopra della base di dati, che ha il compito di fornire metodi ad alto livello per l'accesso ai dati, e di proteggere gli stessi da errori di programmazione comportati dall'accesso diretto.
+
+
 \subsection{Controller}
 Questa sezione si occupa di interfacciarsi con le altre due. Un controller in genere riceve le richieste dell'utente sotto forma di chiamate a funzioni e si occupa di eseguirle, preoccupandosi della validazione e della coerenza dei dati. Esso può essere un tramite tra \emph{View} e \emph{Model}, oppure operare solo con uno di loro:
 \begin{itemize}
@@ -23,6 +27,8 @@ Questa sezione si occupa di interfacciarsi con le altre due. Un controller in ge
 \end{itemize}
 
 I Controller sono quindi quelle parti del programma che si trovano tra l'interfaccia utente e la base di dati, che si occupano di coordinare le altre due componenti. Il loro compito è eseguire le richieste degli utenti, utilizzando le interfacce fornite da View e Model per portarle a termine, ma preoccupandosi anche dei controlli sui dati che transitano in essi.
+
+
 \subsection{View}
 La View è la parte che si occupa della \emph{visualizzazione} dei dati forniti dal controller. Essa utilizza nel sorgente dei \emph{placeholder} che verranno sostituiti a runtime dai dati.
 Un esempio in campo web, potrebbe essere una semplice pagina che saluta il cliente e visualizza un elenco di prodotti in vendita:
@@ -36,14 +42,15 @@ Se i dati forniti dal controller sono questi:
 \begin{verbatim}
 #Controller
 nome="Andrea"
-frutti=['pere', 'mele', 'arancie']
+frutti=['pere', 'mele', 'arance']
 \end{verbatim}
 Il risultato dell'esecuzione sarà quindi:
 \begin{verbatim}
 #Risultato dell'esecuzione:
 Ciao Andrea!
-Oggi in vendita abbiamo: pere mele arancie
+Oggi in vendita abbiamo: pere mele arance
 \end{verbatim}
+
 
 
 \section{Big Data}\label{sec:bigdata}
@@ -51,6 +58,50 @@ I Big Data
 \begin{quotation}
 sono dati che superano i limiti degli strumenti di database tradizionali.\footnote{\cite{rezzani2013big}}
 \end{quotation} 
+
+
+
 \subsection{Acquisizione}
+L'acquisizione dei dati è la parte iniziale del processo, in cui i dati vengono memorizzati. La definizione di questa fase potrebbe finire qui, siccome non esistono altre "regole" per l'acquisizione dei dati nei Big Data: non viene imposta una struttura uguale per tutti i record, la completezza dei dati o che siano tutti memorizzati nello stesso luogo. Inoltre è anche possibile dire che molti dataset non sono pensati per un utilizzo futuro per l'estrazione di informazione. Infatti nel mondo reale l'intuizione delle potenzialità dei dati avviene solo dopo alla memorizzazione, si pensi ai file di log dei sistemi unix o dei server web, che sono salvati su file di testo con centinaia di migliaia di righe. In altri casi i record vengono salvati in basi di dati da diverse organizzazioni, ognuna con i propri standard, comportando strutture dei dati diverse e probabilmente server dislocati in posizioni diverse.
+
+Per questo motivo, quindi, enormi dataset possono trovarsi senza una struttura universalmente adottata da tutti i dati, con campi non compilati e provenienti da basi di dati diverse. Una fase tra l'acquisizione e l'elaborazione dei dati è quella della pulizia dove si tenta di riparare le tuple con campi mancanti ed in caso di fallimento non utilizzandola\footnote{Ovviamente senza compromettere il significato dei dati! Se abbiamo un database di latte di vernici, ed in una tupla non è memorizzato il nome del colore, potremmo risalire ad esso dal codice del colore presente in un altro campo della tupla. Nel caso in cui non sia presente nemmeno quello, non possiamo inventarci che la latta contiene la vernice gialla, la tupla andrà scartata!}. Inoltre si dovrà unire le diverse basi di dati se provenienti da diversi dataset\footnote{Questa operazione, ovviamente, è possibile solo se i dataset contengono informazioni sulla stessa tipologia di dati.} utilizzando una struttura standard.
+\begin{itemize}
+\item Individuare i campi che indicano la stessa informazione
+
+Dataset diversi possono individuare in modo diverso una stessa informazione, sarà compito del data analist di individuarli e creare un nuovo campo in cui memorizzare l'informazione, così da utilizzare solo quest'ultima durante la fase di elaborazione.
+\item Uniformare il dominio dei campi
+
+Le fonti dei dati possono essere istituzioni provenienti da parti diverse del mondo, dove vengono adottati standard diversi per la memorizzazione dell'informazione. Ad esempio, in Italia per misurare le distanze usiamo i Kilometri, mentre negli Stati Uniti vengono utilizzate le miglia. Al momento dell'unione di un dataset italiano ed uno statunitense, si dovrà decidere quale unità di misura adottare, e convertire tutte quelle che ne utilizzano una diversa.
+\item Scartare le tuple non valide
+
+Siccome i \emph{Big Data} sono un insieme di dati eterogenei, quando si cerca di estrarre l'informazione da essi si devono individuare dei campi significativi, che devono essere presenti al fine di creare un'informazione significativa. Nel caso in cui un campo necessario non sia settato, è opportuno non prendere in considerazione quel record, siccome non ci fornisce informazione. Una similitudine con la lingua italiana potrebbe essere la mancanza di uno tra soggetto, complemento oggetto e verbo in una frase. \emph{Piero ha una ferramenta} ha un significato ben preciso, mentre \emph{Piero ha} oppure {una ferramenta} hanno ben poco da dirci.
+\item Selezionare solo i campi utilizzati
+
+Se nell'analisi dei dati alcuni campi non hanno importanza per la statistica, è possibile non prenderli in considerazione.
+\end{itemize}
+
+\subsubsection{Quando effettuare l'unione di due basi di dati distinte}
+Teniamo sempre in mente che stiamo parlando di una grande mole di dati. Le operazioni per l'unione di due dataset descritti prima sono molto costose computazionalmente ed in termini di spazio: occorrerebbe analizzare tutti i dataset almeno una volta, e creare un nuovo dataset contenente il dataset unito risultante. Questo non è sempre possibile, per problemi di spazio oppure anche solo per i diritti sulla proprietà dei dati, molto probabilmente appartenenti alle rispettive istituzioni. Nel caso in cui questo non fosse un problema, ed ignorando completamente il problema del mantenere aggiornato il nuovo dataset, l'unico vantaggio sarebbe la velocità di accesso ai record siccome il dataset è nello stesso luogo, ed ovviamente il costo computazionale dell'unione. Visti i pro e contro, è molto conveniente effettuare tutti i controlli e le conversioni al momento dell'analisi dei dati durante la fase di Map (Cap. \ref{sec:map}).
+
+\subsubsection{Mezzi di memorizzazione}
+I dataset devono essere capaci di gestire grandi quantità di dati, quindi devono essere molto performanti. Un database è utile nel caso di molti dati, ma nel caso dei Big Data stiamo parlando di una quantità ancora più grande, quindi anche il migliore dei DBMS potrebbe avere difficoltà ad effettuare le query in tempo utile. Inoltre i database impongono una rigidità sulla struttura dei dati non necessaria secondo la definizione dei Big Data. Un semplice file di testo può adempiere al compito senza causare particolari problemi, a patto che la struttura utilizzata per la memorizzazione sia valido. Esistono moltissimi metodi per salvare dati su file largamente utilizzati, da campi separati da tabulazioni e record separati da "a capo", a più sofisticate come il formato JSON o XML oppure, fogli elettronici in formato CSV o XLS. Poco importa quale formato venga scelto, l'importante è che esista un modo per recuperare dai file le informazioni ed utilizzarle.
+
+ 
 \subsection{Elaborazione}
+\subsubsection{Map}\label{sec:map}
 \subsection{Visualizzazione}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
