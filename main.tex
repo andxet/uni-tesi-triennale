@@ -2,7 +2,10 @@
 \documentclass[a4paper,11pt,italian,twoside,openany]{book}   	% use "amsart" instead of "article" for AMSLaTeX format
 %\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
 \usepackage[pdftex]{graphicx}			% Use pdf, png, jpg, or epsß with pdflatex; use eps in DVI mode
-								% TeX will automatically convert eps --> pdf in pdflatex		
+								% TeX will automatically convert eps --> pdf in pdflatex	
+								
+\usepackage{caption}
+									
 %\usepackage{amssymb}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}			% Permette l'inserimento di caratteri in UTF-8
@@ -14,6 +17,9 @@
 \setcounter{tocdepth}{4}			% Setta la profondità dell'indice
 
 %\DeclareUnicodeCharacter{00A0}{~}	%Evita l'errore " Package inputenc Error: Unicode char \u8: not set up for use with LaTeX."
+
+%Settaggi per i listati di codice
+\input{progconf.tex}
 
 %Bibliografia
 \usepackage[autostyle,italian=guillemets]{csquotes}
@@ -30,6 +36,9 @@
 
 \include{title}
 
+\newpage
+\thispagestyle{empty}
+\mbox{}
 \tableofcontents
 
 %%%%%%%%

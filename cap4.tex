@@ -1,13 +1,28 @@
 % !TEX encoding = UTF-8 Unicode
 \chapter{Strumenti utilizzati}
+Nella realizzazione del progetto sono stati affrontati molti problemi, in alcuni casi adottando soluzioni comuni nel mondo della programmazione online\footnote{Ad esempio nella manipolazione del DOM, è stata utilizzata una libreria JavaScript chiamata JQuery}, altre realizzate in modo specifico per il progetto. Le problematiche affrontate, tenendo conto delle richieste dei fornitori del dataset, sono state quelle di mostrare i dati nel modo più esplicativo possibile senza fornire la possibilità di accedere direttamente al dataset, utilizzando solo l'interfaccia front-end sviluppata. Il programma quindi effettua delle richieste asincrone al server per ottenere alcune parti del dataset, formattate in modo da contenere solo i dati necessari alla visualizzazione corretta sulla mappa dei punti di interesse.
+
+Un altri obbiettivi da raggiungere sono stati:
+\begin{itemize}
+	\item Rendere possibile una crescita del progetto in futuro
+
+Il progetto è stato strutturato in modo da rendere possibile in futuro l'aggiunta di funzioni ed aggiungere nuovi locali, tenendo ben presente che i pochi record attuali sono molto semplici da gestire, mentre se dovessero aumentare di molto il programma è comunque capace di gestire i nuovi record senza appesantirsi di un overhead troppo elevato.
+
+	\item Utilizzare un database
+
+Siccome il dataset iniziale era un semplice file CSV che necessitava di molte correzioni, l'utilizzo di un database non relazionale come Mongo DB (Capitolo \ref{sec:mongo} a pag. \pageref{sec:mongo} ) avrebbe semplificato di molto la gestione dei record, permettendo di effettuare con la programmazione una più semplice pulizia dei dati. La natura del database permette di memorizzare i record anche se alcuni non contengono informazione in tutti i campi, oppure se alcuni dei campi non sono presenti.
+
+\end{itemize}
+
+
 	\section{Software lato server}%decidere se presentare prima il pattern o lo strumento
 		\subsection{Turbogears}
-		\subsection{Mongo DB}
+		\subsection{Mongo DB}\label{sec:mongo}
 		\subsection{Jinja}%Controllare come si chiama il template engine
 	\section{Linguaggi web}
 	\section{Librerie}
-		\subsection{d3.js}
-		\subsection{polymaps}
+		\subsection{d3.js}\label{sec:d3}
+		\subsection{polymaps}\label{sec:polymaps}
 		\subsection{jquery}
 	\section{Altri strumenti}
 		%Sito da cui otteniamo le mappe
