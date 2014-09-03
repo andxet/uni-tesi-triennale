@@ -1,60 +1,69 @@
 % !TEX encoding = UTF-8 Unicode
-\chapter{Concetti}%Decidere se trasformare in un capitolo di teoria, in cui si parla anche del pattern MVC
-In questo capitolo verranno trattati alcuni concetti teorici la cui conoscenza è necessaria per fornire un quadro generale degli argomenti trattati. Nel Paragrafo \ref{sec:bigdata} si parlerà dei \emph{BigData} e delle tre parti trattate nel capitolo~ \ref{cap:introduzione} dando una descrizione più approfondita. Successivamente nel paragrafo \ref{sec:mvc} si parlerà del \emph{pattern MVC}, un metodo di strutturazione del software molto utilizzato e potente.
+\chapter{Concetti}
+In questo capitolo verranno trattati alcuni concetti teorici la cui conoscenza è necessaria per fornire un quadro generale degli argomenti trattati. Nel Paragrafo \ref{sec:bigdata} si parlerà dei \emph{Big Data} e dei tre punti trattati nel capitolo~ \ref{cap:introduzione} dando una descrizione più approfondita. Successivamente nel paragrafo \ref{sec:mvc} si parlerà del \emph{pattern MVC}, un metodo di strutturazione del software molto utilizzato e potente.
 
 
 \section{Big Data}\label{sec:bigdata}
 I Big Data
-\begin{quotation}
+\begin{quote}
 sono dati che superano i limiti degli strumenti di database tradizionali.\footnote{\cite{rezzani2013big}}
-\end{quotation} 
+\end{quote} 
 Essi sono una mole enorme di dati, spesso senza una struttura definita, difficili da trattare con i mezzi di computazione tradizionali. Con questo termine però, non si intendono solo i dati, ma anche le tecnologie utilizzate per manipolarli.
 
 In questi paragrafi verranno discussi i tre punti già elencati nel Capitolo \ref{sec:puntibd} a pagina \pageref{sec:puntibd}, ossia \emph{acquisizione}, \emph{elaborazione} e \emph{visualizzazione} rispettivamente nei Paragrafi \ref{sec:acquisizione}, \ref{sec:elaborazione} ed \ref{sec:visualizzazione}.
 
 
 \subsection{Acquisizione}\label{sec:acquisizione}
-L'acquisizione dei dati è la parte iniziale del processo, in cui i dati vengono memorizzati. La definizione di questa fase potrebbe finire qui, siccome non esistono altre "regole" per l'acquisizione dei dati nei Big Data: non viene imposta una struttura uguale per tutti i record, la completezza dei dati o che siano tutti memorizzati nello stesso luogo. Inoltre è anche possibile dire che molti dataset non sono pensati per un utilizzo futuro per l'estrazione di informazione. Infatti nel mondo reale l'intuizione delle potenzialità dei dati avviene solo dopo alla memorizzazione, si pensi ai file di log dei sistemi unix o dei server web, che sono salvati su file di testo con centinaia di migliaia di righe. In altri casi i record vengono salvati in basi di dati da diverse organizzazioni, ognuna con i propri standard, comportando strutture dei dati diverse e probabilmente server dislocati in posizioni diverse.
+L'acquisizione dei dati è la parte iniziale del processo, in cui vengono memorizzati. La definizione di questa fase potrebbe finire qui, siccome non esistono altre "regole" per l'acquisizione dei dati nei Big Data: non viene imposta una struttura uguale per tutti i record, la completezza dei dati o che siano memorizzati tutti nello stesso luogo. Inoltre è anche possibile dire che molti dataset non sono pensati per un utilizzo futuro per l'estrazione di informazione. Infatti nel mondo reale l'intuizione delle potenzialità dei dati avviene solo dopo alla memorizzazione, si pensi ai file di log dei sistemi unix o dei server web, che sono salvati su file di testo con centinaia di migliaia di righe. In altri casi i record vengono salvati in basi di dati da diverse organizzazioni, ognuna con i propri standard, comportando strutture dei dati diverse e probabilmente server dislocati in posizioni diverse.
 
-Per questo motivo, quindi, enormi dataset possono trovarsi senza una struttura universalmente adottata da tutti i dati, con campi non compilati e provenienti da basi di dati diverse. Una fase tra l'acquisizione e l'elaborazione dei dati è quella della pulizia dove si tenta di riparare le tuple con campi mancanti ed in caso di fallimento non utilizzandola\footnote{Ovviamente senza compromettere il significato dei dati! Se abbiamo un database di latte di vernici, ed in una tupla non è memorizzato il nome del colore, potremmo risalire ad esso dal codice del colore presente in un altro campo della tupla. Nel caso in cui non sia presente nemmeno quello, non possiamo inventarci che la latta contiene la vernice gialla, la tupla andrà scartata!}. Inoltre si dovrà unire le diverse basi di dati se provenienti da diversi dataset\footnote{Questa operazione, ovviamente, è possibile solo se i dataset contengono informazioni sulla stessa tipologia di dati.} utilizzando una struttura standard.
+Per questo motivo, enormi dataset possono trovarsi senza una struttura universalmente adottata da tutti i dati, con campi non compilati e provenienti da basi di dati diverse. Una fase tra l'acquisizione e l'elaborazione dei dati è quella della pulizia dove si tenta di riparare le tuple con campi mancanti ed in caso di fallimento non utilizzandola\footnote{Ovviamente senza compromettere il significato dei dati! Se abbiamo un database di latte di vernici, ed in una tupla non è memorizzato il nome del colore, potremmo risalire ad esso dal codice del colore presente in un altro campo della tupla. Nel caso in cui non sia presente nemmeno quello, non possiamo inventarci che la latta contiene la vernice gialla, la tupla andrà scartata!}. Inoltre si dovrà unire le diverse basi di dati se provenienti da diversi dataset\footnote{Questa operazione, ovviamente, è possibile solo se i dataset contengono informazioni sulla stessa tipologia di dati.} utilizzando una struttura standard.
 \begin{itemize}
 \item Individuare i campi che indicano la stessa informazione
 
-Dataset diversi possono individuare in modo diverso una stessa informazione, sarà compito del data analist di individuarli e creare un nuovo campo in cui memorizzare l'informazione, così da utilizzare solo quest'ultima durante la fase di elaborazione.
-\item Uniformare il dominio dei campi
+Dataset diversi possono individuare in modo diverso una stessa informazione, sarà compito del data analist di individuarli e creare un nuovo campo in cui memorizzare l'informazione, così da utilizzare solo quest'ultima durante la fase di elaborazione. In dataset di latte di vernici, un'azienda potrebbe utilizzare un campo chiamato \emph{col} per indicare il colore della vernice contenuta nella latta, mentre un'altra potrebbe utilizzare un riferimento ad un record in un altra tabella contenente l'elenco dei colori. Occorre quindi adottare una soluzione per omogeneizzare la rappresentazione del colore.
+
+\item Standardizzare il dominio dei campi
 
 Le fonti dei dati possono essere istituzioni provenienti da parti diverse del mondo, dove vengono adottati standard diversi per la memorizzazione dell'informazione. Ad esempio, in Italia per misurare le distanze usiamo i Kilometri, mentre negli Stati Uniti vengono utilizzate le miglia. Al momento dell'unione di un dataset italiano ed uno statunitense, si dovrà decidere quale unità di misura adottare, e convertire tutte quelle che ne utilizzano una diversa.
 \item Scartare le tuple non valide
 
-Siccome i \emph{Big Data} sono un insieme di dati eterogenei, quando si cerca di estrarre l'informazione da essi si devono individuare dei campi significativi, nel linguaggio dei database relazionali si direbbero \emph{richiesti}, che devono essere presenti al fine di creare un'informazione significativa. Nel caso in cui un campo necessario non sia settato, è opportuno non prendere in considerazione quel record, siccome non ci fornisce informazione. Una similitudine con la lingua italiana potrebbe essere la mancanza di uno tra soggetto, complemento oggetto e verbo in una frase. \emph{Piero ha una ferramenta} ha un significato ben preciso, mentre \emph{Piero ha} oppure {una ferramenta} hanno ben poco da dirci, perché non sappiamo cosa possiede Piero nel primo caso, mentre nel secondo caso non sappiamo se una ferramenta è posseduta da qualcuno, oppure se è aperta, costosa, redditizia eccetera. 
+Siccome i \emph{Big Data} sono un insieme di dati eterogenei, quando si cerca di estrarre l'informazione da essi si devono individuare dei campi significativi, nel linguaggio dei database relazionali si direbbero \emph{required}, che devono essere presenti al fine di creare un'informazione significativa. Nel caso in cui un campo necessario non sia settato, è opportuno non prendere in considerazione quel record, siccome non ci fornisce informazione. Una similitudine con la lingua italiana potrebbe essere la mancanza di uno tra soggetto, complemento oggetto e verbo in una frase. \emph{Piero ha una ferramenta} ha un significato ben preciso, mentre \emph{Piero ha} oppure {una ferramenta} hanno ben poco da dirci, perché non sappiamo cosa possiede Piero nel primo caso, mentre nel secondo caso non sappiamo se una ferramenta è posseduta da qualcuno, oppure se è aperta, costosa, redditizia eccetera. 
 
 Un record contenente informazioni inconcludenti di questo tipo non ci fornisce quindi informazioni. Potrebbe sembrare incorretto non prenderlo in considerazione, siccome è nel dataset per qualche motivo è stato inserito. Potrebbe essere stato corrotto da una chiusura improvvisa del programma che stava effettuando la memorizzazione, oppure il supporto su cui è memorizzato contiene degli errori. Dopotutto però, siccome non possiamo estrarre l'informazione dal record non ci resta che scartarlo, ed al massimo, tenere in considerazione che abbiamo incontrato un record corrotto.
 \item Selezionare solo i campi utilizzati
 
-Se nell'analisi dei dati alcuni campi non hanno importanza per la statistica, è possibile non prenderli in considerazione.
+Se nell'analisi dei dati alcuni campi non hanno importanza per la statistica, è possibile non prenderli in considerazione. Questa operazione corrisponde ad una \emph{proiezione} o \begin{verbatim}select\end{verbatim} in un database relazionale.
+
 \end{itemize}
 
 \subsubsection{Quando effettuare l'unione di due basi di dati distinte}
-Teniamo sempre in mente che stiamo parlando di una grande mole di dati. Le operazioni per l'unione di due dataset descritti prima sono molto costose computazionalmente ed in termini di spazio: occorrerebbe analizzare tutti i dataset almeno una volta, e creare un nuovo dataset contenente il dataset unito risultante. Questo non è sempre possibile, per problemi di spazio oppure anche solo per i diritti sulla proprietà dei dati, molto probabilmente appartenenti alle rispettive istituzioni. Nel caso in cui questo non fosse un problema, ed ignorando completamente il problema del mantenere aggiornato il nuovo dataset, l'unico vantaggio sarebbe la velocità di accesso ai record siccome il dataset è nello stesso luogo, ed ovviamente il costo computazionale dell'unione. Visti i pro e contro, è molto conveniente effettuare tutti i controlli e le conversioni al momento dell'analisi dei dati durante la fase di Map (Cap. \ref{sec:mapreduce}).
+Teniamo sempre in mente che stiamo parlando di una grande mole di dati. Le operazioni per l'unione di due dataset descritti prima sono molto costose computazionalmente ed in termini di spazio: occorrerebbe analizzare tutti i dataset almeno una volta, e creare un nuovo dataset contenente il dataset risultante. Questo non è sempre possibile, per problemi di spazio oppure anche solo per i diritti sulla proprietà dei dati, molto probabilmente appartenenti alle rispettive istituzioni. Nel caso in cui questo non fosse un problema, ed ignorando completamente il problema del mantenere aggiornato il nuovo dataset, l'unico vantaggio sarebbe la velocità di accesso ai record siccome il dataset è nello stesso luogo. Visti i pro e contro, è molto conveniente effettuare tutti i controlli e le conversioni al momento dell'analisi dei dati durante la fase di lettura, oppure come spiegato più tardi, nella fase di Map (Cap. \ref{sec:mapreduce}).
 
 \subsubsection{Mezzi di memorizzazione}
 I dataset devono essere capaci di gestire grandi quantità di dati, quindi devono essere molto performanti. Un database è utile nel caso di molti dati, ma nel caso dei Big Data stiamo parlando di una quantità ancora più grande, quindi anche il migliore dei DBMS potrebbe avere difficoltà ad effettuare le query in tempo utile. Inoltre i database impongono una rigidità sulla struttura dei dati non necessaria secondo la definizione dei Big Data. Un semplice file di testo può adempiere al compito senza causare particolari problemi, a patto che la struttura utilizzata per la memorizzazione sia valido. Esistono moltissimi metodi per salvare dati su file largamente utilizzati, da campi separati da tabulazioni e record separati da "a capo", a più sofisticate come il formato JSON o XML oppure, fogli elettronici in formato CSV o XLS. Poco importa quale formato venga scelto, l'importante è che esista un modo per recuperare dai file le informazioni ed utilizzarle.
 
 \subsubsection{Database non relazionali}
+I database non relazionali, anche detti \emph{NoSQL}, sono una tipologia di database nati in seguito allo sviluppo spropositato del web e delle grandi quantità di dati con cui esso ha a che fare. Ben presto gli scienziati si sono accorti che i database relazionali sono molto limitati per quanto riguarda la scalabilità e la parallelizzazione, inoltre sono molto costosi. La necessità di porre rimedio a queste problematiche ha portato alla nascita di nuovi database più flessibili, essi infatti non seguono il livello relazionale, rendendo possibile il salvataggio di dati senza una struttura predefinita. Il fatto che non utilizzino il linguaggio SQL per interrogare il DBMS è una conseguenza del non adottare il modello relazionale, da qui il nome. Per maggiori informazioni, consultare \cite{nosql}. Nel capitolo \ref{sec:mongo} si parlerà di \emph{Mongo DB}, un database non relazionale che utilizza \emph{Javascript} come linguaggio di interrogazione.
  
 \subsection{Elaborazione}\label{sec:elaborazione}
-(TODO: fare una introduzione all'argomento, specificare che il MapReduce è solo un modo possibile.)
-Trattando una mole enorme di dati, è necessario adottare una strategia per ottimizzare la computazione, mantenendo la flessibilità richiesta dai Big Data. \emph{Divide et Impera} è una locuzione latina, essa è usata anche in informatica per indicare la suddivisione di un grande problema complicato in problemi più semplici e facili da risolvere. Proprio su questo concetto si basano le tecnologie sviluppate per i Big Data. 3
-
-\subsubsection{MapReduce}\label{sec:mapreduce}
-Il pattern \emph{Map Reduce} permette di analizzare parallelamente\footnote{Ovviamente solo se l'hardware supporta il parallelismo!} tutti i record di uno o più dataset nella fase di \emph{Map} ed unire i risultati nella fase di \emph{Reduce}.
+La parte di elaborazione è quella più costosa computazionalmente, bisogna quindi prestare attenzione alla struttura dei processi che elaborano i dati. Tutto deve essere calibrato per i grandi numeri che comportano i Big Data, prestando attenzione al tipo di calcoli da effettuare per ogni record, perché potrebbe influire moltissimo sul tempo di computazione totale. Un pattern molto utilizzato, introdotto da Google, è il \emph{Map Reduce}. \label{sec:mapreduce}
+Esso permette di analizzare parallelamente\footnote{Ovviamente solo se l'hardware supporta il parallelismo} i record di uno o più dataset nella fase di \emph{Map} ed unire i risultati nella fase di \emph{Reduce}.
+\begin{figure}[ht!]
+	\caption{Pattern Map Reduce}
+	\label{img:mapreduce}
+	\centering
+		\includegraphics[width=\textwidth]{img/mapreduce.jpg}
+\end{figure}
+La Figura \ref{img:mapreduce} mostra il principio di funzionamento di un programma che applica Map Reduce. I dati vengono prelevati dai rispettivi dataset e suddivisi tra più macchine che effettuano il Map, in cui viene eseguito del codice su ogni singolo record. In questa fase vengono effettuati tutti i controlli descritti nel paragrafo \ref{sec:acquisizione}. In output si ottengono zero o più coppie chiave valore. Successivamente se sono presenti più unità di reduce i risultati vengono smistati tra di essi. Ogni unità di reduce si occupa di processare le coppie secondo la funzione di reduce, ed effettuano l'effettivo calcolo della statistica desiderata.
 
 
 
 \subsection{Visualizzazione}\label{sec:visualizzazione}
-La parte di visualizzazione è la parte più creativa ed interessante, parte principale in questa pubblicazione. Una volta effettuate le elaborazioni bisogna presentare i risultati, e si possono utilizzare tabelle o grafici. Con grafici si intendono diagrammi a barre, istogrammi, diagrammi a torte eccetera, quello che meglio può presentare ad un lettore il risultato elaborazioni. Un presentazione che permette di capire immediatamente il contenuto dei dati, utilizzando icone e simboli è sicuramente migliore di un'altra che presenta un grafico difficile da interpretare. Inoltre, è compito del data scientist decidere cosa mostrare, scegliendo cosa è interessante e cosa non lo è per raggiungere l'obbiettivo che si è preposto.
+La parte di visualizzazione è la parte più creativa ed interessante, parte principale in questa pubblicazione. Una volta effettuate le elaborazioni bisogna presentare i risultati, e si possono utilizzare tabelle o grafici. Con grafici si intendono diagrammi a barre, istogrammi, diagrammi a torte eccetera, quello che meglio può presentare ad un lettore il risultato elaborazioni. Una presentazione che permette di capire immediatamente il contenuto dei dati, utilizzando icone e simboli è sicuramente migliore di un'altra che presenta un grafico difficile da interpretare. Inoltre, è compito del data scientist decidere cosa mostrare, scegliendo cosa è interessante e cosa non lo è per raggiungere l'obbiettivo che si è preposto.
 
-Gli strumenti a disposizione degli sviluppatori sono molteplici, da fogli elettronici come Excel o Calc di OpenOffice, programmi matematici come Matlab, fino alle librerie disponibili per i vari linguaggi di programmazione, sicuramente più complesse ma molto più potenti in fatto di personalizzazione. L'evoluzione del World Wide Web ha permesso la creazione di pagine interattive che supportano animazioni. Nel capitolo \ref{sec:d3} vedremo uno strumento web chiamato D3.js, il quale ci permette non solo di disegnare grafici in una pagina web, ma di gestire molti componenti grafici come rettangoli, cerchi, poligoni, \emph{mappe} e le loro animazioni.
+Gli strumenti a disposizione degli sviluppatori sono molteplici, da fogli elettronici come Excel o Calc di OpenOffice, programmi matematici come Matlab, fino alle librerie disponibili per i vari linguaggi di programmazione, sicuramente più complesse ma molto più potenti in fatto di personalizzazione. 
+
+L'evoluzione del World Wide Web ha permesso la creazione di pagine interattive che supportano animazioni. Nel capitolo \ref{sec:d3} vedremo uno strumento web chiamato D3.js, il quale ci permette non solo di disegnare grafici in una pagina web, ma di gestire molti componenti grafici come rettangoli, cerchi, poligoni, \emph{mappe} e le loro animazioni.
 
 
 
@@ -62,10 +71,23 @@ Gli strumenti a disposizione degli sviluppatori sono molteplici, da fogli elettr
 
 
 \section{Pattern MVC}\label{sec:mvc}
-In informatica un pattern è TODO: inserire una definizione tratta da un libro e la sua citazione nella bibliografia
-Il pattern MVC si occupa di definire una struttura per il software che divide e rende autonome le parti di visualizzazione, elaborazione e memorizzazione dei dati.
-TODO: Inserire una figura che rappresenta il pattern mvc.
-Questa struttura offre notevoli vantaggi in termini di pulizia, estensione e mantenimento del codice. Il codice viene diviso in più parti ognuno delle quali sarà un Il programma sarà più pulito siccome in ogni sorgente sarà presente solamente il codice che si occupa di uno specifico compito. Non si presenterà quindi una situazione in cui nella stessa parte di codice oltre ad elaborare i dati ci dobbiamo preoccupare di formattarli per la presentazione su schermo, perché sarà compito della \emph{View}. L'aggiunta do nuove funzioni al software è molto semplice, per effettuare delle modifiche è spesso necessario aggiungere poche righe di codice in ogni parte del programma, senza il bisogno di stravolgerne la struttura. Il mantenimento del software risulta più semplice grazie alla suddivisione del codice in base al ruolo ed alla conseguente leggibilità.
+Un design pattern \begin{quote} descrive un problema che si ripete più e più volte nel nostro ambiente, descrive poi il nucleo della soluzione del problema, in modo tale che si possa usare la soluzione un milione di volte, senza mai applicarla alla stessa maniera.\footnote{Tratto da \cite[p. 2,3]{designpatterns}, l'autore cita a sua volta la definizione di pattern architettonici, mostrando la similitudine con quelli informatici.}\end{quote}
+
+Il pattern MVC si occupa di definire una struttura per il software che divide e rende autonome le parti di visualizzazione, elaborazione e memorizzazione dei dati (Fig. \ref{img:mvc}.
+
+Questa struttura offre notevoli vantaggi in termini di pulizia, estensione e mantenimento del codice. Secondo \cite[p. 4]{designpatterns}
+\begin{quote}
+MVC consta di tre tipologie di oggetti. Il Model è l'oggetto dell'applicazione, il View è la sua rappresentazione a video, e il Controller definisce le reazioni dell'interfaccia grafica all'input dell'utente.
+\end{quote}
+
+\begin{figure}[ht!]
+	\caption{Pattern MVC}
+	\label{img:mvc}
+	\centering
+		\includegraphics[width=\textwidth]{img/mvc1.png}
+\end{figure}
+
+Il programma sarà più pulito siccome in ogni sorgente sarà presente solamente il codice che si occupa di uno specifico compito. Non si presenterà quindi una situazione in cui nella stessa parte di codice oltre ad elaborare i dati ci dobbiamo preoccupare di formattarli per la presentazione su schermo, perché sarà compito della \emph{View}. L'aggiunta do nuove funzioni al software è molto semplice, per effettuare delle modifiche è spesso necessario aggiungere poche righe di codice in ogni parte del programma, senza il bisogno di stravolgerne la struttura. Il mantenimento del software risulta più semplice grazie alla suddivisione del codice in base al ruolo ed alla conseguente leggibilità.
 
 
 \subsection{Model}
@@ -89,11 +111,11 @@ I Controller sono quindi quelle parti del programma che si trovano tra l'interfa
 \subsection{View}
 La View è la parte che si occupa della \emph{visualizzazione} dei dati forniti dal controller. Essa utilizza nel sorgente dei \emph{placeholder} che verranno sostituiti a runtime dai dati.
 Un esempio in campo web, potrebbe essere una semplice pagina che saluta il cliente e visualizza un elenco di prodotti in vendita:
-\begin{verbatim}
+\begin{lstlisting}
 #View
 Ciao {{nome}}!
 Oggi in vendita abbiamo: {{for frutto in frutti}}
-\end{verbatim}
+\end{lstlisting}
 Le parti tra le doppie parentesi graffe\footnote{La sintassi di questo esempio è ispirata a TODO: Cosa? chiamato Mustache TODO: Link al sito nella bibliografia} sono i placeholder, i quali possono contenere anche semplici istruzioni di ciclo o di confronto. Nel momento dell'esecuzione queste verranno sostituite con i dati indicati. Questo è necessario perché al momento della scrittura del programma le variabili "nome" e "frutti" non sono ancora stati calcolati!
 Se i dati forniti dal controller sono questi:
 \begin{lstlisting}
@@ -102,11 +124,10 @@ nome="Andrea"
 frutti=['pere', 'mele', 'arance']
 \end{lstlisting}
 Il risultato dell'esecuzione sarà quindi:
-\begin{verbatim}
-#Risultato dell'esecuzione:
+\begin{lstlisting}
 Ciao Andrea!
 Oggi in vendita abbiamo: pere mele arance
-\end{verbatim}
+\end{lstlisting}
 
 
 
