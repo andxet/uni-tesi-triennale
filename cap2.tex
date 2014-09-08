@@ -42,7 +42,7 @@ Teniamo sempre in mente che stiamo parlando di una grande mole di dati. Le opera
 \subsubsection{Mezzi di memorizzazione}
 I dataset devono essere capaci di gestire grandi quantità di dati, quindi devono essere molto performanti. Un database è utile nel caso di molti dati, ma nel caso dei Big Data stiamo parlando di una quantità ancora più grande, quindi anche il migliore dei DBMS potrebbe avere difficoltà ad effettuare le query in tempo utile. Inoltre i database impongono una rigidità sulla struttura dei dati non necessaria secondo la definizione dei Big Data. Un semplice file di testo può adempiere al compito senza causare particolari problemi, a patto che la struttura utilizzata per la memorizzazione sia valido. Esistono moltissimi metodi per salvare dati su file largamente utilizzati, da campi separati da tabulazioni e record separati da "a capo", a più sofisticate come il formato JSON o XML oppure, fogli elettronici in formato CSV o XLS. Poco importa quale formato venga scelto, l'importante è che esista un modo per recuperare dai file le informazioni ed utilizzarle.
 
-\subsubsection{Database non relazionali}
+\subsubsection{Database non relazionali}\label{sec:dbnonrel}
 I database non relazionali, anche detti \emph{NoSQL}, sono una tipologia di database nati in seguito allo sviluppo spropositato del web e delle grandi quantità di dati con cui esso ha a che fare. Ben presto gli scienziati si sono accorti che i database relazionali sono molto limitati per quanto riguarda la scalabilità e la parallelizzazione, inoltre sono molto costosi. La necessità di porre rimedio a queste problematiche ha portato alla nascita di nuovi database più flessibili, essi infatti non seguono il livello relazionale, rendendo possibile il salvataggio di dati senza una struttura predefinita. Il fatto che non utilizzino il linguaggio SQL per interrogare il DBMS è una conseguenza del non adottare il modello relazionale, da qui il nome. Per maggiori informazioni, consultare \cite{nosql}. Nel capitolo \ref{sec:mongo} si parlerà di \emph{Mongo DB}, un database non relazionale che utilizza \emph{Javascript} come linguaggio di interrogazione.
  
 \subsection{Elaborazione}\label{sec:elaborazione}
@@ -108,7 +108,7 @@ Questa sezione si occupa di interfacciarsi con le altre due. Un controller in ge
 I Controller sono quindi quelle parti del programma che si trovano tra l'interfaccia utente e la base di dati, che si occupano di coordinare le altre due componenti. Il loro compito è eseguire le richieste degli utenti, utilizzando le interfacce fornite da View e Model per portarle a termine, ma preoccupandosi anche dei controlli sui dati che transitano in essi.
 
 
-\subsection{View}
+\subsection{View}\label{sec:view}
 La View è la parte che si occupa della \emph{visualizzazione} dei dati forniti dal controller. Essa utilizza nel sorgente dei \emph{placeholder} che verranno sostituiti a runtime dai dati.
 Un esempio in campo web, potrebbe essere una semplice pagina che saluta il cliente e visualizza un elenco di prodotti in vendita:
 \begin{lstlisting}
