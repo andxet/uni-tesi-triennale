@@ -8,7 +8,7 @@ I Big Data
 \begin{quote}
 sono dati che superano i limiti degli strumenti di database tradizionali.\footnote{\cite{rezzani2013big}}
 \end{quote} 
-Essi sono una mole enorme di dati, spesso senza una struttura definita, difficili da trattare con i mezzi di computazione tradizionali. Con questo termine però, non si intendono solo i dati, ma anche le tecnologie utilizzate per manipolarli.
+Essi sono una mole enorme di dati, spesso senza una struttura definita, difficili da trattare con i mezzi di computazione tradizionali. Con Big Data però, non si intendono solo i dati, ma anche le tecnologie utilizzate per manipolarli.
 
 In questi paragrafi verranno discussi i tre punti già elencati nel Capitolo \ref{sec:puntibd} a pagina \pageref{sec:puntibd}, ossia \emph{acquisizione}, \emph{elaborazione} e \emph{visualizzazione} rispettivamente nei Paragrafi \ref{sec:acquisizione}, \ref{sec:elaborazione} ed \ref{sec:visualizzazione}.
 
@@ -32,7 +32,7 @@ Siccome i \emph{Big Data} sono un insieme di dati eterogenei, quando si cerca di
 Un record contenente informazioni inconcludenti di questo tipo non ci fornisce quindi informazioni. Potrebbe sembrare incorretto non prenderlo in considerazione, siccome è nel dataset per qualche motivo è stato inserito. Potrebbe essere stato corrotto da una chiusura improvvisa del programma che stava effettuando la memorizzazione, oppure il supporto su cui è memorizzato contiene degli errori. Dopotutto però, siccome non possiamo estrarre l'informazione dal record non ci resta che scartarlo, ed al massimo, tenere in considerazione che abbiamo incontrato un record corrotto.
 \item Selezionare solo i campi utilizzati
 
-Se nell'analisi dei dati alcuni campi non hanno importanza per la statistica, è possibile non prenderli in considerazione. Questa operazione corrisponde ad una \emph{proiezione} o \begin{verbatim}select\end{verbatim} in un database relazionale.
+Se nell'analisi dei dati alcuni campi non hanno importanza per la statistica, è possibile non prenderli in considerazione. Questa operazione corrisponde ad una \emph{proiezione} o \emph{select} in un database relazionale.
 
 \end{itemize}
 
@@ -131,7 +131,7 @@ Oggi in vendita abbiamo: pere mele arance
 
 %%%%%%%SOFTWARE LATO SERVER%%%%%%%%
 \section{Software lato server}
-Come ogni sito web, visualizzare una pagina sono necessari un browser internet ed un server che risponda alle richieste HTTP. Il browser si connetterà al server e quest'ultimo invierà la pagina, infine il browser si occuperà di visualizzarla interpretando il codice HTML ed eseguendo gli script lato client in esso contenuto.
+Come ogni sito web, per visualizzare una pagina sono necessari un browser internet ed un server che risponda alle richieste HTTP. Il browser si connetterà al server e quest'ultimo invierà la pagina, infine il browser si occuperà di visualizzarla interpretando il codice HTML ed eseguendo gli script lato client in esso contenuto.
 \subsection{Turbogears}\label{sec:tg}
 Turbo Gears 2 è un framework web scritto in \emph{Python}\footnote{Tutte le informazioni possono essere trovate sul sito ufficiale: \url{http://turbogears.org/}.}, esso permette la creazione di siti web in modo veloce e semplice applicando il pattern MVC. Fornisce la possibilità di scegliere quale Model utilizzare, fornendo una scelta fra database relazionali e non. Anche per gli altri componenti è possibile effettuare delle scelte, ma per lo sviluppo di questo progetto sono stati utilizzati quelli di default.
 Turbo Gears può anche essere utilizzato come server web, siccome offre un modo molto semplice per avviarne uno.
@@ -190,7 +190,7 @@ In essa è sempre definito un \emph{decoratore} riconoscibile con la direttiva \
 
 		
 \subsection{Mongo DB}\label{sec:mongo}
-Come spiegato nel capitolo \ref{sec:dbnonrel}, \emph{Mongo DB} è il DBMS utilizzato per il progetto, in cui vengono memorizzati i dati dei locali. Il sito ufficiale è \url{www.mongodb.org}, in cui oltre al programma si può trovare il manuale ed un tutorial interattivo. Mongo come linguaggio di interrogazione non utilizza SQL a causa della sua natura NOSQL, ma utilizza javascript. Importantissimi sono il concetto di \emph{documento} e \emph{collezione}: in Mongo non esistono tabelle e relazioni, ma collezioni di documenti. Ogni documento è un oggetto javascript, che può contenere variabili liste e riferimenti ad altri oggetti, il tutto diviso per collezioni. Nel database vengono memorizzati gli oggetti Javascript tramite una funzione \texttt{save()}, ed è possibile estrarli utilizzando la funzione \texttt{find()}. Nel momento della creazione di un nuovo documento, Mongo aggiunge un campo \texttt{\_id} contenente un oggetto che rappresenta un identificativo univoco nella collezione, equivalente ad una chiave primaria di una tabella.
+Come spiegato nel capitolo \ref{sec:dbnonrel}, \emph{Mongo DB} è il DBMS utilizzato per il progetto, in cui vengono memorizzati i dati utilizzati dall'applicazione. Il sito ufficiale è \url{www.mongodb.org}, in cui oltre al programma si può trovare il manuale ed un tutorial interattivo. Mongo come linguaggio di interrogazione non utilizza SQL a causa della sua natura NOSQL, ma utilizza javascript. Importantissimi sono il concetto di \emph{documento} e \emph{collezione}: in Mongo non esistono tabelle e relazioni, ma collezioni di documenti. Ogni documento è un oggetto javascript, che può contenere variabili liste e riferimenti ad altri oggetti, il tutto diviso per collezioni. Nel database vengono memorizzati gli oggetti Javascript tramite una funzione \texttt{save()}, ed è possibile estrarli utilizzando la funzione \texttt{find()}. Nel momento della creazione di un nuovo documento, Mongo aggiunge un campo \texttt{\_id} contenente un oggetto che rappresenta un identificativo univoco nella collezione, equivalente ad una chiave primaria di una tabella.
 
 \section{Librerie}
 \subsection{d3.js}\label{sec:d3}

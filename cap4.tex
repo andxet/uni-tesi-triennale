@@ -1,5 +1,5 @@
 % !TEX encoding = UTF-8 Unicode
-\chapter{Funzionamento}%richiesta al server tramite url, AJAX per la richiesta dei dati, come opera turbogears, problemi e soluzioni
+\chapter{Architettura del sistema e sue funzionalità}%richiesta al server tramite url, AJAX per la richiesta dei dati, come opera turbogears, problemi e soluzioni
 Le problematiche affrontate, tenendo conto delle richieste dei fornitori del dataset, sono state quelle di mostrare i dati nel modo più esplicativo possibile senza fornire la possibilità di accedere direttamente al dataset, utilizzando solo l'interfaccia front-end sviluppata. Il programma carica una sola volta la pagina web ed effettua delle richieste asincrone al server per per interrogare il database, ottenendo risultati tali da contenere solo i dati necessari alla visualizzazione corretta sulla mappa dei punti di interesse.
 
 Altri obbiettivi da raggiungere sono stati:
@@ -18,7 +18,7 @@ La struttura del progetto è quella standard di Turbogears ed è stata discussa 
 Nel progetto i linguaggi di programmazione usati prevalentemente sono stati Python per la parte lato server e Javascript lato client. Non mancano ovviamente i linguaggi web come HTML e CSS.
 
 \section{Lato client}
-Una volta scaricata la pagina, al posto della mappa sarà presente un tag \texttt{div} con id="map" vuoto, che sarà completato dalla dalla chiamata a funzione \texttt{drawMap()} a fondo pagina\footnote{Una buona tecnica per evitare che il caricamento della pagina rimanga bloccato a causa del download degli script, è quello di spostare i tag \texttt{script} alla fine del documento.} che si occuperà di creare le strutture dati necessarie a mostrarla. 
+Una volta scaricata la pagina, al posto della mappa sarà presente un tag \texttt{div} con id="map" vuoto, che sarà completato dalla chiamata a funzione \texttt{drawMap()} a fondo pagina\footnote{Una buona tecnica per evitare che il caricamento della pagina rimanga bloccato a causa del download degli script, è quello di spostare i tag \texttt{script} alla fine del documento.} che si occuperà di creare le strutture dati necessarie a mostrarla. 
 \texttt{drawMap} è una funzione javascript definita nel file \texttt{public/js/map.js} che esegue queste operazioni:
 \begin{enumerate}
 \item seleziona nel DOM il tag \texttt{div} prima citato
@@ -84,9 +84,9 @@ def index(self):
 
 Si possono ottenere parametri dal client in diversi modi\footnote{In modo simile a quanto descritto in seguito, è possibile ottenere i parametri inviati tramite i metodi \emph{GET} e \emph{POST}.}, il progetto li inserisce in coda all'url dopo il nome della funzione (vedi paragrafo \ref{sec:tg}). Nel listato \ref{ls:index} non sono presenti parametri, quindi non ci si aspetta valori passati dalla richiesta HTTP. Nella funzione \ref{ls:param} a pagina \pageref{ls:param} ci si aspetta un parametro \texttt{id}, necessario per individuare il locale nel database e richiederne le informazioni.
 
-Ming come già detto si occupa delle operazioni su database. Esso prevede due modalità, una più a basso livello, l'altra più ad alto livello con maggiore astrazione utilizzata dal progetto, chiamata \emph{ODM}. Esso fornisce alcune funzionalità in più dell'altra versione, tra cui un sistema che offre alcune funzionalità simili alle transazioni si SQL, e la comodità di operare sugli oggetti veri e propri nel caso di campi che puntano ad altri documenti (chiavi esterne)\footnote{Maggiori dettagli su \url{http://merciless.sourceforge.net/odm.html}}. Richiede la definizione delle classi che rappresenteranno il model. Esse dovranno estendere la \texttt{MappedClass} di Ming, definire una sottoclasse contenente le informazioni necessarie al framework e definire i campi della classe, che saranno effettivamente i campi che verranno memorizzati nel database (vedi esempio nel listato \ref{ls:mingclass}).
+Ming come già detto si occupa delle operazioni su database. Esso prevede due modalità, una più a basso livello, l'altra più ad alto livello con maggiore astrazione utilizzata dal progetto, chiamata \emph{ODM}. Esso fornisce alcune funzionalità in più dell'altra versione, tra cui un sistema che offre alcune funzionalità simili alle transazioni di SQL, e la comodità di operare sugli oggetti veri e propri nel caso di campi che puntano ad altri documenti (chiavi esterne)\footnote{Maggiori dettagli su \url{http://merciless.sourceforge.net/odm.html}}. Richiede la definizione delle classi che rappresenteranno il model. Esse dovranno estendere la \texttt{MappedClass} di Ming, definire una sottoclasse contenente le informazioni necessarie al framework e definire i campi della classe, che saranno effettivamente i campi che verranno memorizzati nel database (vedi esempio nel listato \ref{ls:mingclass}).
 
-\begin{lstlisting}[label=ls:mingclass,caption={Classe della collezione di categorie, con i campi sa salace sul database.},language=Python]
+\begin{lstlisting}[label=ls:mingclass,caption={Classe della collezione di categorie, con i campi da salvare sul database.},language=Python]
 class Categoria(MappedClass):
     class __mongometa__:
         session = DBSession
@@ -101,9 +101,9 @@ La definizione di classi del model permette anche di specificare campi con rifer
 
 Per il salvataggio e la ricerca su database è necessario introdurre il concetto di \emph{sessione} di Ming: consiste nel collegamento al database, ma fornisce anche i metodi per interagire con esso. Ogni operazione sugli oggetti mappati con il database finisce in una coda di operazioni, che verrà scritta effettivamente quando si richiamerà il metodo \texttt{flush()}. Mongo non supporta le transazioni come SQL, questa funzionalità cerca di ricalcare alcuni benefici da loro offerti.
 
-Per creare nuovi documenti occorre istanziare la classe prima definita ed effettuare una chiamata al metodo \texttt{flush()} della sessione. L'aggiunta dei dati nel database, nel progetto avviene nella fase di \emph{bootstrap}, definita nella omonima funzione nel file \texttt{bootstrap.py}. Essa carica tutti i dati che inizialmente sono memorizzati in un file in formato json\footnote{Frutto del lavoro di pulizia dei colleghi di progetto, nda.} ed uno per uno li memorizza nel database.
+Per creare nuovi documenti occorre istanziare la classe prima definita ed effettuare una chiamata al metodo \texttt{flush()} della sessione. I dati dell'applicazione inizialmente risiedono in un file json\footnote{Frutto del lavoro di pulizia dei colleghi di progetto, nda.} contenente tutti i dati dei Locali, che vengono inseriti nel database durante la procedura di installazione del programma durante il \emph{bootstrap}, una funzione che effettua le operazioni preliminari prima del primo avvio del programma, definita nel file \texttt{bootstrap.py}. Essa analizza il file e carica i locali uno per uno.
 
-L'interrogazione del database avviene con il metodo \texttt{find()} dell'oggetto sessione: accetta due parametri, con il primo si può specificare tramite un oggetto \texttt{dict} di python una query, in modo simile a quelle da effettuare sul client di Mongo in Javascript, permettendo l'equivalente di una \emph{selezione} nel calcolo relazionale, o taglio orizzontale. Il secondo permette di specificare quali campi ottenere, se omesso vengono restituiti tutti. L'equivalente in calcolo elazionale di una \emph{proiezione}, o taglio verticale.
+L'interrogazione del database avviene con il metodo \texttt{find()} dell'oggetto sessione: accetta due parametri, con il primo si può specificare tramite un oggetto \texttt{dict} di python una query, in modo simile a quelle da effettuare sul client di Mongo in Javascript, permettendo l'equivalente di una \emph{selezione} nel calcolo relazionale. Il secondo permette di specificare quali campi ottenere, se omesso vengono restituiti tutti. L'equivalente in calcolo relazionale di una \emph{proiezione}.
 
 In Piedmont Heritage l'interrogazione del database avviene, prendendo in considerazione il listato \ref{ls:param}, utilizzando l'oggetto \texttt{c\_locale}. Esso è l'equivalente dello scrivere \texttt{model.mainsession.db.locali}, ed è l'oggetto che fornisce il metodo \texttt{find()} per la collezione \emph{locali}
 
@@ -118,26 +118,32 @@ def detail(self, id):
     return dict(data = list(det))
 \end{lstlisting}
 
-La funzione del Listato \ref{ls:param} è utilizzata dalla funzione richiamata dal client quando viene selezionato un marker. Il decoratore specificato (il parametro della direttiva \texttt{@expose()}) è JSON, la funzione restituirà quindi il valore di ritorno creando un oggetto in formato JSON equivalente. L'url a cui il client riceve i dati è \texttt{http://piedmontheritage.com/detail/527ac93d3573d7707e1a2f27.json} . \texttt{detail} è il nome della funzione, mentre \texttt{527ac93d3573d7707e1a2f27} è l'id del locale. La risposta del server, in JSON, è quella del listato \ref{ls:detail}.
+La funzione del Listato \ref{ls:param} è utilizzata dalla funzione richiamata dal client quando viene selezionato un marker. Il decoratore specificato (il parametro della direttiva \texttt{@expose()}) è JSON, la funzione restituirà quindi il valore di ritorno creando un oggetto in formato JSON equivalente. L'url a cui il client riceve i dati è la seguente:
+\begin{lstlisting}
+http://piedmontheritage.com/detail/527ac93d3573d7707e1a2f27.json
+\end{lstlisting}
+\texttt{detail} è il nome della funzione, mentre \texttt{527ac93d3573d7707e1a2f27} è l'id del locale. La risposta del server, in JSON, è quella del listato \ref{ls:detail}.
 
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[label=ls:detail,caption={Dati in formato JSON restituiti dal server.},language=c]
 {"data": [
-	{"comune": "ACQUI TERME",
-	 "indirizzo": "Via G. Garibaldi 73",
-	 "datazione": "1930",
-	 "tipo": "Merceria",
-	 "images": [],
-	 "lon": 8.4677381,
-	 "denom": "Merceria Voglino",
-	 "lat": 44.6762883,
-	 "denomlocale": "",
-	 "restauro": "1980",
-	 "_id": "527ac93d3573d7707e1a2f27",
-	 "id": "R0335027","
-	 ": "AL"}
-	     ]
+    		{"comune": "ACQUI TERME",
+    	 	 "indirizzo": "Via G. Garibaldi 73",
+    	 	 "datazione": "1930",
+    	 	 "tipo": "Merceria",
+    	 	 "images": [],
+    	 	 "lon": 8.4677381,
+    	 	 "denom": "Merceria Voglino",
+    	 	 "lat": 44.6762883,
+    	 	 "denomlocale": "",
+    	 	 "restauro": "1980",
+    	 	 "_id": "527ac93d3573d7707e1a2f27",
+    	 	 "id": "R0335027","
+    	 	 ": "AL"}
+    	    ]
 }
 \end{lstlisting}
+\end{minipage}
 
 (TODO: scegliere se descrivere ogni funzione, oppure fare una descrizione generale.)
 Le altre funzioni del controller funzionano in modo analogo:
