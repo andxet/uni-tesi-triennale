@@ -4,9 +4,9 @@ In questo capitolo verranno trattati alcuni concetti teorici la cui conoscenza �
 
 
 \section{Big Data}\label{sec:bigdata}
-I Big Data
+La definizione fornita da \cite{rezzani2013big} sui Big Data è che
 \begin{quote}
-sono dati che superano i limiti degli strumenti di database tradizionali.\footnote{\cite{rezzani2013big}}
+sono dati che superano i limiti degli strumenti di database tradizionali.
 \end{quote} 
 Essi sono una mole enorme di dati, spesso senza una struttura definita, difficili da trattare con i mezzi di computazione tradizionali. Con Big Data però, non si intendono solo i dati, ma anche le tecnologie utilizzate per manipolarli.
 
@@ -22,7 +22,7 @@ Per questo motivo, enormi dataset possono trovarsi senza una struttura universal
 
 Dataset diversi possono individuare in modo diverso una stessa informazione, sarà compito del data analist di individuarli e creare un nuovo campo in cui memorizzare l'informazione, così da utilizzare solo quest'ultima durante la fase di elaborazione. In dataset di latte di vernici, un'azienda potrebbe utilizzare un campo chiamato \emph{col} per indicare il colore della vernice contenuta nella latta, mentre un'altra potrebbe utilizzare un riferimento ad un record in un altra tabella contenente l'elenco dei colori. Occorre quindi adottare una soluzione per omogeneizzare la rappresentazione del colore.
 
-\item Standardizzare il dominio dei campi
+\item Standardizzare il DOMinio dei campi
 
 Le fonti dei dati possono essere istituzioni provenienti da parti diverse del mondo, dove vengono adottati standard diversi per la memorizzazione dell'informazione. Ad esempio, in Italia per misurare le distanze usiamo i Kilometri, mentre negli Stati Uniti vengono utilizzate le miglia. Al momento dell'unione di un dataset italiano ed uno statunitense, si dovrà decidere quale unità di misura adottare, e convertire tutte quelle che ne utilizzano una diversa.
 \item Scartare le tuple non valide
@@ -43,7 +43,7 @@ Teniamo sempre in mente che stiamo parlando di una grande mole di dati. Le opera
 I dataset devono essere capaci di gestire grandi quantità di dati, quindi devono essere molto performanti. Un database è utile nel caso di molti dati, ma nel caso dei Big Data stiamo parlando di una quantità ancora più grande, quindi anche il migliore dei DBMS potrebbe avere difficoltà ad effettuare le query in tempo utile. Inoltre i database impongono una rigidità sulla struttura dei dati non necessaria secondo la definizione dei Big Data. Un semplice file di testo può adempiere al compito senza causare particolari problemi, a patto che la struttura utilizzata per la memorizzazione sia valido. Esistono moltissimi metodi per salvare dati su file largamente utilizzati, da campi separati da tabulazioni e record separati da "a capo", a più sofisticate come il formato JSON o XML oppure, fogli elettronici in formato CSV o XLS. Poco importa quale formato venga scelto, l'importante è che esista un modo per recuperare dai file le informazioni ed utilizzarle.
 
 \subsubsection{Database non relazionali}\label{sec:dbnonrel}
-I database non relazionali, anche detti \emph{NoSQL}, sono una tipologia di database nati in seguito allo sviluppo spropositato del web e delle grandi quantità di dati con cui esso ha a che fare. Ben presto gli scienziati si sono accorti che i database relazionali sono molto limitati per quanto riguarda la scalabilità e la parallelizzazione, inoltre sono molto costosi. La necessità di porre rimedio a queste problematiche ha portato alla nascita di nuovi database più flessibili, essi infatti non seguono il livello relazionale, rendendo possibile il salvataggio di dati senza una struttura predefinita. Il fatto che non utilizzino il linguaggio SQL per interrogare il DBMS è una conseguenza del non adottare il modello relazionale, da qui il nome. Per maggiori informazioni, consultare \cite{nosql}. Nel capitolo \ref{sec:mongo} si parlerà di \emph{Mongo DB}, un database non relazionale che utilizza \emph{Javascript} come linguaggio di interrogazione.
+I database non relazionali, anche detti \emph{NoSQL}, sono una tipologia di database nati in seguito allo sviluppo spropositato del web e delle grandi quantità di dati con cui esso ha a che fare. Ben presto gli scienziati si sono accorti che i database relazionali sono molto limitati per quanto riguarda la scalabilità e la parallelizzazione, inoltre sono molto costosi. La necessità di porre rimedio a queste problematiche ha portato alla nascita di nuovi database più flessibili, essi infatti non seguono il livello relazionale, rendendo possibile il salvataggio di dati senza una struttura predefinita. Il fatto che non utilizzino il linguaggio SQL per interrogare il DBMS è una conseguenza del non adottare il modello relazionale, da qui il nome. Per maggiori informazioni, consultare \cite{nosql}. Nel capitolo \ref{sec:mongo} si parlerà di \emph{Mongo DB}, un database non relazionale che utilizza \emph{JavaScript} come linguaggio di interrogazione.
  
 \subsection{Elaborazione}\label{sec:elaborazione}
 La parte di elaborazione è quella più costosa computazionalmente, bisogna quindi prestare attenzione alla struttura dei processi che elaborano i dati. Tutto deve essere calibrato per i grandi numeri che comportano i Big Data, prestando attenzione al tipo di calcoli da effettuare per ogni record, perché potrebbe influire moltissimo sul tempo di computazione totale. Un pattern molto utilizzato, introdotto da Google, è il \emph{Map Reduce}. \label{sec:mapreduce}
@@ -54,7 +54,7 @@ Esso permette di analizzare parallelamente\footnote{Ovviamente solo se l'hardwar
 	\centering
 		\includegraphics[width=\textwidth]{img/mapreduce.jpg}
 \end{figure}
-La Figura \ref{img:mapreduce} mostra il principio di funzionamento di un programma che applica Map Reduce. I dati vengono prelevati dai rispettivi dataset e suddivisi tra più macchine che effettuano il Map, in cui viene eseguito del codice su ogni singolo record. In questa fase vengono effettuati tutti i controlli descritti nel paragrafo \ref{sec:acquisizione}. In output si ottengono zero o più coppie chiave valore. Successivamente se sono presenti più unità di reduce i risultati vengono smistati tra di essi. Ogni unità di reduce si occupa di processare le coppie secondo la funzione di reduce, ed effettuano l'effettivo calcolo della statistica desiderata.
+La Figura \ref{img:mapreduce} mostra il principio di funzionamento di un programma che applica Map Reduce. I dati vengono prelevati dai rispettivi dataset e suddivisi tra più macchine che effettuano il Map, in cui viene eseguito del codice per ogni singolo record. In questa fase vengono effettuati tutti i controlli descritti nel paragrafo \ref{sec:acquisizione}. In output si ottengono zero o più coppie chiave valore. Successivamente se sono presenti più unità di reduce i risultati vengono smistati tra di essi. Ogni unità di reduce si occupa di processare le coppie secondo la funzione di reduce, ed effettuano l'effettivo calcolo della statistica desiderata.
 
 
 
@@ -71,9 +71,11 @@ L'evoluzione del World Wide Web ha permesso la creazione di pagine interattive c
 
 
 \section{Pattern MVC}\label{sec:mvc}
-Un design pattern \begin{quote} descrive un problema che si ripete più e più volte nel nostro ambiente, descrive poi il nucleo della soluzione del problema, in modo tale che si possa usare la soluzione un milione di volte, senza mai applicarla alla stessa maniera.\footnote{Tratto da \cite[p. 2,3]{designpatterns}, l'autore cita a sua volta la definizione di pattern architettonici, mostrando la similitudine con quelli informatici.}\end{quote}
+\begin{quote}Un design pattern  descrive un problema che si ripete più e più volte nel nostro ambiente, descrive poi il nucleo della soluzione del problema, in modo tale che si possa usare la soluzione un milione di volte, senza mai applicarla alla stessa maniera\end{quote}
 
-Il pattern MVC si occupa di definire una struttura per il software che divide e rende autonome le parti di visualizzazione, elaborazione e memorizzazione dei dati (Fig. \ref{img:mvc}.
+Questa definizione di \emph{Design Pattern} viene data da \cite[p. 2,3]{designpatterns}, l'autore cita a sua volta la definizione di pattern architettonici, mostrando la similitudine con quelli informatici.
+
+Il pattern MVC si occupa di definire una struttura per il software che divide e rende autonome le parti di visualizzazione, elaborazione e memorizzazione dei dati (Fig. \ref{img:mvc}).
 
 Questa struttura offre notevoli vantaggi in termini di pulizia, estensione e mantenimento del codice. Secondo \cite[p. 4]{designpatterns}
 \begin{quote}
@@ -173,7 +175,7 @@ A seguire verranno descritte alcune delle cartelle più importanti.
 \item[model] contiene le classi necessarie a Ming per definire una struttura per i dati da salvare sul database.
 \item[controllers] contiene i controller. \texttt{root.py} è il \emph{root controller}, \texttt{error.py}, creato da TG, si occupa della gestione degli errori.
 \item[templates] contiene le pagine html del progetto.
-\item[public] contiene tutte le risorse accessibili via web, come immagini, librerie javascript e fogli di stile.
+\item[public] contiene tutte le risorse accessibili via web, come immagini, librerie JavaScript e fogli di stile.
 \item[config e lib] contengono impostazioni e funzioni utili, utilizzate da TG e liberamente utilizzabili dal programmatore.
 \end{description}
 
@@ -190,17 +192,45 @@ In essa è sempre definito un \emph{decoratore} riconoscibile con la direttiva \
 
 		
 \subsection{Mongo DB}\label{sec:mongo}
-Come spiegato nel capitolo \ref{sec:dbnonrel}, \emph{Mongo DB} è il DBMS utilizzato per il progetto, in cui vengono memorizzati i dati utilizzati dall'applicazione. Il sito ufficiale è \url{www.mongodb.org}, in cui oltre al programma si può trovare il manuale ed un tutorial interattivo. Mongo come linguaggio di interrogazione non utilizza SQL a causa della sua natura NOSQL, ma utilizza javascript. Importantissimi sono il concetto di \emph{documento} e \emph{collezione}: in Mongo non esistono tabelle e relazioni, ma collezioni di documenti. Ogni documento è un oggetto javascript, che può contenere variabili liste e riferimenti ad altri oggetti, il tutto diviso per collezioni. Nel database vengono memorizzati gli oggetti Javascript tramite una funzione \texttt{save()}, ed è possibile estrarli utilizzando la funzione \texttt{find()}. Nel momento della creazione di un nuovo documento, Mongo aggiunge un campo \texttt{\_id} contenente un oggetto che rappresenta un identificativo univoco nella collezione, equivalente ad una chiave primaria di una tabella.
+Come spiegato nel capitolo \ref{sec:dbnonrel}, \emph{Mongo DB} è il DBMS utilizzato per il progetto, in cui vengono memorizzati i dati utilizzati dall'applicazione. Il sito ufficiale è \url{www.mongodb.org}, in cui oltre al programma si può trovare il manuale ed un tutorial interattivo. 
+
+Mongo come linguaggio di interrogazione non utilizza SQL a causa della sua natura NOSQL, ma utilizza JavaScript. Importantissimi sono il concetto di \emph{documento} e \emph{collezione}, in quando a differenza del modello relazionale, in Mongo non esistono tabelle e relazioni, ma collezioni di documenti. Molto facilmente si potrebbe dire che una collezione è l'equivalente di una tabella nel modello relazionale ed un documento ad un record memorizzato in una tabella, ma le differenze si estendono alle chiavi primarie ed alle relazioni, siccome esse non esistono. Il tutto è molto semplificato rispetto al modello relazionale: per identificare univocamente ogni record si utilizza un campo \emph{id} come descritto più avanti, e per riferirsi a documenti di altre collezioni si memorizza un puntatore al documento stesso. Inoltre, ogni documento è un oggetto JavaScript, che può contenere come attributi liste e riferimenti ad altri oggetti. Nel database vengono memorizzati gli oggetti JavaScript tramite una funzione \texttt{save()}, ed è possibile estrarli utilizzando la funzione \texttt{find()}. Nel momento della creazione di un nuovo documento, Mongo aggiunge un campo \texttt{\_id} contenente un oggetto che rappresenta un identificativo univoco nella collezione, equivalente ad una chiave primaria di una tabella.
+Per riferirsi ad una collezione si utilizza l'oggetto 
+\texttt{database.collezione}
+ossia, la collezione \texttt{collezione} è un attributo dell'oggetto \texttt{database}. Nell'oggetto collezione sono definiti i metodi per il salvataggio, la ricerca e l'eliminazione dei documenti prima citati. In particolare, per la funzione di ricerca, il parametro passato è un oggetto JavaScript contenente i parametri di ricerca, i quali valgono per i campi del documento: si può definire una ricerca per valori \emph{uguali}, \emph{maggiori}, \emph{minori} o \emph{diversi} da valori specificati. 
+
+Il valore di ritorno è un iteratore, il quale è un oggetto che applica il pattern \emph{iterator}, il quale, brevemente, permette di definire un'interfaccia per scorrere una struttura dati, in modo da renderla virtualmente una lista di elementi accessibili sequenzialmente. In questo modo ad esempio, se si vuole percorrere un albero, una funzione \emph{successivo} di un iteratore che visita l'albero in \emph{profondità} restituirà la radice, il figlio della radice, poi il figlio del figlio della radice. Nel caso si voglia visitare l'albero in ampiezza, basterà istanziare un iteratore di quel tipo e si otterrà l'effetto desiderato, il tutto senza cambiare il codice della funzione che riceve gli elementi. Questo oggetto fornisce il metodo \texttt{next()}, che restituisce il documento successivo nella lista, ed offre la comodità di poter essere utilizzato in un ciclo \texttt{for} perché supportato nativamente da JavaScript.
 
 \section{Librerie}
 \subsection{d3.js}\label{sec:d3}
-D3.js è una libreria javascript che offre strumenti molto potenti per la visualizzazione di dati, il sito ufficiale è raggiungibile alla pagina \url{http://d3js.org/}. Oltre ad offrire funzioni per creare grafici utilizzando la \emph{Scalable Vector Graphics} di HTML\footnote{Più precisamente, il tag \texttt{svg}}, offre potenti strumenti di manipolazione di dati e di controllo del DOM.
+D3.js è una libreria JavaScript che offre strumenti molto potenti per la visualizzazione di dati, il sito ufficiale è raggiungibile alla pagina \url{http://d3js.org/}. La descrizione reperibile da esso, spiega che
+\begin{quotation}
+D3.js è un libreria JavaScript per la manipolazione di documenti basati sui dati. D3 fornisce gli strumenti per rappresentare i dati utilizzando HTML, SVG e CSS. D3 si focalizza sugli standard web offrendo tutta la potenza dei browser attuali senza essere dipendenti da un framework proprietario, combinando strumenti di visualizzazione con un approccio \emph{data-driven} per la manipolazione del DOM.
+\end{quotation}
+In pratica D3 permette di modificare il DOM di una pagina web in base ai dati collegati all'applicazione, utilizzando i tag \emph{SVG} di \emph{HTML}, acronimo di \emph{Scalable Vector Graphics}.
+\emph{Protovis}, realizzato dal professor Jeff Heer, Vadim Ogievetsky e Mike Bostock della Stanford University, era una libreria JavaScript capace di creare grafica SVG a partire dai dati. Nel 2011 il suo sviluppo venne interrotto per spostare l'attenzione al suo successore, D3.js, creato dagli stessi tre sviluppatori ed in particolar modo da Mike Bostock, che oltre ad essere più performante si attiene ai più recenti standard web.\footnote{Fonte: \url{http://en.wikipedia.org/wiki/D3.js\#Context}}. 
+
+Gli standard web sono una serie di regole e \emph{Best Practices} non proprietarie, che definiscono e descrivono gli aspetti del \emph{World Wide Web}. Uno degli enti che si occupa degli standard web è il World Wide Web Consortium o \emph{W3C}, che descrive gli elementi di HTML, CSS, JavaScript e non solo, fornendo spiegazioni esaustive di cono siano, come funzionano ed anche di come si usano. Il sito di W3C è \url{http://www.w3.org/}.
+
+Gli strumenti che offre D3.js comprendono:
+\begin{itemize}
+\item Metodi di selezione
+
+Il framework rispetta le \emph{W3C Selectors API}, uno standard alternativo alle API di manipolazione del DOM tradizionali. Con queste è possibile selezionare uno o più elementi nella pagina utilizzando diversi criteri, come il nome del \emph{tag}, l'\emph{id} o se un attributo è uguale ad un certo valore, ottenendo un array contenente tutti gli elementi conformi al criterio di selezione.
+
+\item Binding dei dati
+
+Dato un array in JavaScript, D3 permette di associarlo ad una funzione che si occuperà di eseguire del codice per ogni singolo elemento, con la possibilità di specificare cosa fare nel caso in cui questo array cambi, fornendo una funzione che viene richiamata quando degli elementi vengono aggiunti o eliminati. Quindi, dato un array contenente degli oggetti che rappresentano dei locali, lo si può associare ad un elemento Mappa che si occuperà di visualizzare in un canvas SVG un puntino per ogni locale nella giusta posizione su di una mappa.
+
+\item Transizioni
+
+Questa parte si occupa di fornire le primitive per animare le parti di una pagina. Definendo il tempo della transizione e lo stato finale di alcuni attributi, al momento dell'esecuzione del codice D3 si occupa di modificare in modo graduale gli attributi specificati fino da diventare come definiti nello stato finale. In questo modo si può modificare la posizione di un oggetto del DOM in modo che se si verifica un preciso evento, gradualmente si sposti verso l'esterno della pagina fino a scomparire, oppure per cambiarne il colore in modo graduale.
+\end{itemize}
+
+D3 permette lo sviluppo di grafici molto vari: diagrammi a torte, grafi e mappe interattive, il solo limite è la fantasia del programmatore. Sul sito principale si possono vedere molti esempi interessanti.
 		
 \subsection{Polymaps}\label{sec:polymaps}
-Polymaps (\url{http://polymaps.org/}) è una libreria javascript che utilizzando gli strumenti forniti da d3.js permette la creazione di mappe dinamiche, offrendo strumenti per effettuare operazioni su coordinate geospaziali. Sarà necessario ottenere le mappe in formato immagine da un server esterno, la libreria metterà quindi a disposizione strumenti come zoom e pan per spostarsi nella mappa.
-
-
-
+Polymaps (\url{http://polymaps.org/}), scritta dallo stesso sviluppatore di D3.js Mike Bostock, è una libreria JavaScript che permette la creazione di mappe dinamiche ed è basata su D3. Offre numerose funzioni per la manipolazione di coordinate geospaziali, di mappe vettoriali o di mappe basate su immagini. Queste ultime possono essere ottenute tramite le funzioni fornite dalla libreria di siti come \emph{OpenStreetMaps} o \emph{Bing}.
 
 
 
