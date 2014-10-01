@@ -1,6 +1,6 @@
 % !TEX encoding = UTF-8 Unicode
-\chapter{Concetti e strumenti utilizzati}
-In questo capitolo verranno trattati alcuni concetti teorici la cui conoscenza è necessaria per fornire un quadro generale degli argomenti trattati. Nel Paragrafo \ref{sec:bigdata} si parlerà dei \emph{Big Data} e dei tre punti trattati nel capitolo~ \ref{cap:introduzione} dando una descrizione più approfondita. Successivamente nel paragrafo \ref{sec:mvc} si parlerà del \emph{pattern MVC}, un metodo di strutturazione del software molto utilizzato e potente.
+\chapter{Concetti e strumenti utilizzati}\label{cap:concetti}
+In questo capitolo verranno trattati alcuni concetti teorici la cui conoscenza è necessaria per fornire un quadro generale degli argomenti trattati. Nel Paragrafo \ref{sec:bigdata} si parlerà dei \emph{Big Data} e dei tre punti trattati nel capitolo~ \ref{cap:introduzione} dando una descrizione più approfondita. Successivamente nel paragrafo \ref{sec:mvc} si parlerà del \emph{pattern MVC}, un metodo di strutturazione del software molto utilizzato e potente. Infine, nei cap. \ref{sec:server} e \ref{sec:librerie} verranno descritti gli strumenti utilizzati per lo sviluppo del progetto.
 
 
 \section{Big Data}\label{sec:bigdata}
@@ -22,12 +22,12 @@ Per questo motivo, enormi dataset possono trovarsi senza una struttura universal
 
 Dataset diversi possono individuare in modo diverso una stessa informazione, sarà compito del data analist di individuarli e creare un nuovo campo in cui memorizzare l'informazione, così da utilizzare solo quest'ultima durante la fase di elaborazione. In dataset di latte di vernici, un'azienda potrebbe utilizzare un campo chiamato \emph{col} per indicare il colore della vernice contenuta nella latta, mentre un'altra potrebbe utilizzare un riferimento ad un record in un altra tabella contenente l'elenco dei colori. Occorre quindi adottare una soluzione per omogeneizzare la rappresentazione del colore.
 
-\item Standardizzare il DOMinio dei campi
+\item Standardizzare il dominio dei campi
 
-Le fonti dei dati possono essere istituzioni provenienti da parti diverse del mondo, dove vengono adottati standard diversi per la memorizzazione dell'informazione. Ad esempio, in Italia per misurare le distanze usiamo i Kilometri, mentre negli Stati Uniti vengono utilizzate le miglia. Al momento dell'unione di un dataset italiano ed uno statunitense, si dovrà decidere quale unità di misura adottare, e convertire tutte quelle che ne utilizzano una diversa.
+Le fonti dei dati possono essere istituzioni provenienti da parti diverse del mondo, dove vengono adottati standard diversi per la memorizzazione dell'informazione. Ad esempio, in Italia per misurare le distanze usiamo i Chilometri, mentre negli Stati Uniti vengono utilizzate le miglia. Al momento dell'unione di un dataset italiano ed uno statunitense, si dovrà decidere quale unità di misura adottare, e convertire tutte quelle che ne utilizzano una diversa.
 \item Scartare le tuple non valide
 
-Siccome i \emph{Big Data} sono un insieme di dati eterogenei, quando si cerca di estrarre l'informazione da essi si devono individuare dei campi significativi, nel linguaggio dei database relazionali si direbbero \emph{required}, che devono essere presenti al fine di creare un'informazione significativa. Nel caso in cui un campo necessario non sia settato, è opportuno non prendere in considerazione quel record, siccome non ci fornisce informazione. Una similitudine con la lingua italiana potrebbe essere la mancanza di uno tra soggetto, complemento oggetto e verbo in una frase. \emph{Piero ha una ferramenta} ha un significato ben preciso, mentre \emph{Piero ha} oppure {una ferramenta} hanno ben poco da dirci, perché non sappiamo cosa possiede Piero nel primo caso, mentre nel secondo caso non sappiamo se una ferramenta è posseduta da qualcuno, oppure se è aperta, costosa, redditizia eccetera. 
+Siccome i \emph{Big Data} sono un insieme di dati eterogenei, quando si cerca di estrarre l'informazione da essi si devono individuare dei campi significativi, nel linguaggio dei database relazionali si direbbero \emph{required}, che devono essere presenti al fine di creare un'informazione significativa. Nel caso in cui un campo necessario non sia settato, è opportuno non prendere in considerazione quel record, siccome non ci fornisce informazione. Una similitudine con la lingua italiana potrebbe essere la mancanza di uno tra soggetto, complemento oggetto e verbo in una frase. \emph{Piero ha una ferramenta} ha un significato ben preciso, mentre \emph{Piero ha} oppure \emph{una ferramenta} hanno ben poco da dirci, perché non sappiamo cosa possiede Piero nel primo caso, mentre nel secondo caso non sappiamo se una ferramenta è posseduta da qualcuno, oppure se è aperta, costosa, redditizia eccetera. 
 
 Un record contenente informazioni inconcludenti di questo tipo non ci fornisce quindi informazioni. Potrebbe sembrare incorretto non prenderlo in considerazione, siccome è nel dataset per qualche motivo è stato inserito. Potrebbe essere stato corrotto da una chiusura improvvisa del programma che stava effettuando la memorizzazione, oppure il supporto su cui è memorizzato contiene degli errori. Dopotutto però, siccome non possiamo estrarre l'informazione dal record non ci resta che scartarlo, ed al massimo, tenere in considerazione che abbiamo incontrato un record corrotto.
 \item Selezionare solo i campi utilizzati
@@ -37,9 +37,9 @@ Se nell'analisi dei dati alcuni campi non hanno importanza per la statistica, è
 \end{itemize}
 
 \subsubsection{Quando effettuare l'unione di due basi di dati distinte}
-Teniamo sempre in mente che stiamo parlando di una grande mole di dati. Le operazioni per l'unione di due dataset descritti prima sono molto costose computazionalmente ed in termini di spazio: occorrerebbe analizzare tutti i dataset almeno una volta, e creare un nuovo dataset contenente il dataset risultante. Questo non è sempre possibile, per problemi di spazio oppure anche solo per i diritti sulla proprietà dei dati, molto probabilmente appartenenti alle rispettive istituzioni. Nel caso in cui questo non fosse un problema, ed ignorando completamente il problema del mantenere aggiornato il nuovo dataset, l'unico vantaggio sarebbe la velocità di accesso ai record siccome il dataset è nello stesso luogo. Visti i pro e contro, è molto conveniente effettuare tutti i controlli e le conversioni al momento dell'analisi dei dati durante la fase di lettura, oppure come spiegato più tardi, nella fase di Map (Cap. \ref{sec:mapreduce}).
+Teniamo sempre in mente che stiamo parlando di una grande mole di dati. Le operazioni per l'unione di due dataset descritti prima sono molto costose computazionalmente ed in termini di spazio: occorrerebbe analizzare tutti i dataset almeno una volta, e creare un nuovo dataset contenente il risultato. Questo non è sempre possibile, per problemi di spazio oppure anche solo per i diritti sulla proprietà dei dati, molto probabilmente appartenenti alle rispettive istituzioni. Nel caso in cui questo non fosse un problema, ed ignorando completamente il problema del mantenere aggiornato il nuovo dataset, l'unico vantaggio sarebbe la velocità di accesso ai record siccome il dataset è nello stesso luogo. Visti i pro e contro, è molto conveniente effettuare tutti i controlli e le conversioni al momento dell'analisi dei dati durante la fase di lettura, oppure come spiegato più tardi, nella fase di Map (Cap. \ref{sec:mapreduce}).
 
-\subsubsection{Mezzi di memorizzazione}
+\subsubsection{Strumenti di memorizzazione}
 I dataset devono essere capaci di gestire grandi quantità di dati, quindi devono essere molto performanti. Un database è utile nel caso di molti dati, ma nel caso dei Big Data stiamo parlando di una quantità ancora più grande, quindi anche il migliore dei DBMS potrebbe avere difficoltà ad effettuare le query in tempo utile. Inoltre i database impongono una rigidità sulla struttura dei dati non necessaria secondo la definizione dei Big Data. Un semplice file di testo può adempiere al compito senza causare particolari problemi, a patto che la struttura utilizzata per la memorizzazione sia valido. Esistono moltissimi metodi per salvare dati su file largamente utilizzati, da campi separati da tabulazioni e record separati da "a capo", a più sofisticate come il formato JSON o XML oppure, fogli elettronici in formato CSV o XLS. Poco importa quale formato venga scelto, l'importante è che esista un modo per recuperare dai file le informazioni ed utilizzarle.
 
 \subsubsection{Database non relazionali}\label{sec:dbnonrel}
@@ -118,7 +118,7 @@ Un esempio in campo web, potrebbe essere una semplice pagina che saluta il clien
 Ciao {{nome}}!
 Oggi in vendita abbiamo: {{for frutto in frutti}}
 \end{lstlisting}
-Le parti tra le doppie parentesi graffe\footnote{La sintassi di questo esempio è ispirata a TODO: Cosa? chiamato Mustache TODO: Link al sito nella bibliografia} sono i placeholder, i quali possono contenere anche semplici istruzioni di ciclo o di confronto. Nel momento dell'esecuzione queste verranno sostituite con i dati indicati. Questo è necessario perché al momento della scrittura del programma le variabili "nome" e "frutti" non sono ancora stati calcolati!
+Le parti tra le doppie parentesi graffe\footnote{La sintassi di questo esempio è ispirata ad un \emph{Template Engine} chiamato Mustache (\url{http://mustache.github.io})} sono i placeholder, i quali possono contenere anche semplici istruzioni di ciclo o di confronto. Nel momento dell'esecuzione queste verranno sostituite con i dati indicati. Questo è necessario perché al momento della scrittura del programma le variabili "nome" e "frutti" non sono ancora stati calcolati!
 Se i dati forniti dal controller sono questi:
 \begin{lstlisting}
 #Controller
@@ -132,7 +132,7 @@ Oggi in vendita abbiamo: pere mele arance
 \end{lstlisting}
 
 %%%%%%%SOFTWARE LATO SERVER%%%%%%%%
-\section{Software lato server}
+\section{Software lato server}\label{sec:server}
 Come ogni sito web, per visualizzare una pagina sono necessari un browser internet ed un server che risponda alle richieste HTTP. Il browser si connetterà al server e quest'ultimo invierà la pagina, infine il browser si occuperà di visualizzarla interpretando il codice HTML ed eseguendo gli script lato client in esso contenuto.
 \subsection{Turbogears}\label{sec:tg}
 Turbo Gears 2 è un framework web scritto in \emph{Python}\footnote{Tutte le informazioni possono essere trovate sul sito ufficiale: \url{http://turbogears.org/}.}, esso permette la creazione di siti web in modo veloce e semplice applicando il pattern MVC. Fornisce la possibilità di scegliere quale Model utilizzare, fornendo una scelta fra database relazionali e non. Anche per gli altri componenti è possibile effettuare delle scelte, ma per lo sviluppo di questo progetto sono stati utilizzati quelli di default.
@@ -148,13 +148,13 @@ http://www.tg2site.com/controller/function
 Nome dell'host
 \item[controller]
 		
-Indica quale controller utilizzare. Questo pu\`o essere omesso, in tal caso verr\`a utilizzato il \emph{root controller}.
+Indica quale controller utilizzare. Questo può essere omesso, in tal caso verrà utilizzato il \emph{root controller}.
 \item[function]
 		
 Indica quale funzione del controller si desidera richiamare.
 \end{description}
 
-In TG la \emph{view} è implementata utilizzando un linguaggio di makup simile all'html con l'aggiunta di \emph{marker} o \emph{segnaposto} che permettono di utilizzare un meccanismo simile a quello mostrato nel paragrafo \ref{sec:view}. Il modulo che si occupa della sostituzione del segnaposto con le informazioni si chiama Genshi.
+In TG la \emph{view} è implementata utilizzando un linguaggio di markup simile all'html con l'aggiunta di \emph{marker} o \emph{segnaposto} che permettono di utilizzare un meccanismo simile a quello mostrato nel paragrafo \ref{sec:view}. Il modulo che si occupa della sostituzione del segnaposto con le informazioni si chiama Genshi.
 
 Il \emph{model} invece è implementato utilizzando una libreria chiamata \emph{Ming}\footnote{\url{merciless.sourceforge.net/tour.html}}, la quale permette di definire delle classi di oggetti che avranno la caratteristica di rimanere sincronizzate con Mongo DB. Esso appartiene a quella classe di software che viene definito un \emph{ORM} (Object Relational Mapping). Tutti gli ORM forniscono la possibilità di associare una classe di un programma con una tabella del database, assicurando la \emph{consistenza} nei dati che si raggiunge con tecniche che permettono di creare un oggetto a partire da un record di un database, modificarlo e di occuparsi di memorizzare le modifiche, oppure creare direttamente un nuovo record. Il tutto avviene senza scrivere una riga del linguaggio di interrogazione del database, ci pensa ORM. 
 
@@ -201,7 +201,7 @@ ossia, la collezione \texttt{collezione} è un attributo dell'oggetto \texttt{da
 
 Il valore di ritorno è un iteratore, il quale è un oggetto che applica il pattern \emph{iterator}, il quale, brevemente, permette di definire un'interfaccia per scorrere una struttura dati, in modo da renderla virtualmente una lista di elementi accessibili sequenzialmente. In questo modo ad esempio, se si vuole percorrere un albero, una funzione \emph{successivo} di un iteratore che visita l'albero in \emph{profondità} restituirà la radice, il figlio della radice, poi il figlio del figlio della radice. Nel caso si voglia visitare l'albero in ampiezza, basterà istanziare un iteratore di quel tipo e si otterrà l'effetto desiderato, il tutto senza cambiare il codice della funzione che riceve gli elementi. Questo oggetto fornisce il metodo \texttt{next()}, che restituisce il documento successivo nella lista, ed offre la comodità di poter essere utilizzato in un ciclo \texttt{for} perché supportato nativamente da JavaScript.
 
-\section{Librerie}
+\section{Librerie}\label{sec:librerie}
 \subsection{d3.js}\label{sec:d3}
 D3.js è una libreria JavaScript che offre strumenti molto potenti per la visualizzazione di dati, il sito ufficiale è raggiungibile alla pagina \url{http://d3js.org/}. La descrizione reperibile da esso, spiega che
 \begin{quotation}

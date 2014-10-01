@@ -1,5 +1,5 @@
 % !TEX encoding = UTF-8 Unicode
-\chapter{Architettura del sistema e sue funzionalità}%richiesta al server tramite url, AJAX per la richiesta dei dati, come opera turbogears, problemi e soluzioni
+\chapter{Architettura del sistema e sue funzionalità}\label{cap:funzionamento}%richiesta al server tramite url, AJAX per la richiesta dei dati, come opera turbogears, problemi e soluzioni
 Le problematiche affrontate, tenendo conto delle richieste dei fornitori del dataset, sono state quelle di mostrare i dati nel modo più esplicativo possibile senza fornire la possibilità di accedere direttamente al dataset, utilizzando solo l'interfaccia front-end sviluppata. Il programma carica una sola volta la pagina web ed effettua delle richieste asincrone al server per per interrogare il database, ottenendo risultati tali da contenere solo i dati necessari alla visualizzazione corretta sulla mappa dei punti di interesse.
 
 Altri obbiettivi da raggiungere sono stati:
@@ -86,7 +86,7 @@ def index(self):
 
 Si possono ottenere parametri dal client in diversi modi\footnote{In modo simile a quanto descritto in seguito, è possibile ottenere i parametri inviati tramite i metodi \emph{GET} e \emph{POST}.}, il progetto li inserisce in coda all'url dopo il nome della funzione (vedi paragrafo \ref{sec:tg}). Nel listato \ref{ls:index} non sono presenti parametri, quindi non ci si aspetta valori passati dalla richiesta HTTP. Nella funzione \ref{ls:param} a pagina \pageref{ls:param} ci si aspetta un parametro \texttt{id}, necessario per individuare il locale nel database e richiederne le informazioni.
 
-Ming come già detto si occupa delle operazioni su database. Esso prevede due modalità, una più a basso livello, l'altra più ad alto livello con maggiore astrazione utilizzata dal progetto, chiamata \emph{ODM}. Esso fornisce alcune funzionalità in più dell'altra versione, tra cui un sistema che offre alcune funzionalità simili alle transazioni di SQL, e la comodità di operare sugli oggetti veri e propri nel caso di campi che puntano ad altri documenti (chiavi esterne)\footnote{Maggiori dettagli su \url{http://merciless.sourceforge.net/odm.html}}. Richiede la definizione delle classi che rappresenteranno il model. Esse dovranno estendere la \texttt{MappedClass} di Ming, definire una sottoclasse contenente le informazioni necessarie al framework e definire i campi della classe, che saranno effettivamente i campi che verranno memorizzati nel database (vedi esempio nel listato \ref{ls:mingclass}).
+Ming come già detto si occupa delle operazioni su database. Esso prevede due modalità, una più a basso livello, l'altra più ad alto livello con maggiore astrazione utilizzata dal progetto, chiamata \emph{ODM}. Esso fornisce alcune funzionalità in più dell'altra versione, tra cui un sistema che ne offre di simili alle transazioni di SQL, e la comodità di operare sugli oggetti veri e propri nel caso di campi che puntano ad altri documenti (chiavi esterne)\footnote{Maggiori dettagli su \url{http://merciless.sourceforge.net/odm.html}}. Richiede la definizione delle classi che rappresenteranno il model. Esse dovranno estendere la \texttt{MappedClass} di Ming, definire una sottoclasse contenente le informazioni necessarie al framework e definire i campi della classe, che saranno effettivamente i campi che verranno memorizzati nel database (vedi esempio nel listato \ref{ls:mingclass}).
 
 \begin{lstlisting}[label=ls:mingclass,caption={Classe della collezione di categorie, con i campi da salvare sul database.},language=Python]
 class Categoria(MappedClass):
@@ -111,7 +111,7 @@ In Piedmont Heritage l'interrogazione del database avviene, prendendo in conside
 
 
 Successivamente verranno descritte le funzioni del root controller ed il loro funzionamento.
-(TODO: decidere se lasciarlo) Il listato completo del root controller, presente nel file texttt{controllers/root.py} è a pagina \pageref{ls:completo}.
+Il listato completo del root controller, presente nel file texttt{controllers/root.py} è a pagina \pageref{ls:completo}.
 
 \begin{lstlisting}[label=ls:param,caption={Funzione utilizzata per richiedere i dettagli su un locale con ID=\texttt{id}},language=Python]
 @expose('json')
@@ -147,17 +147,21 @@ http://piedmontheritage.com/detail/527ac93d3573d7707e1a2f27.json
 \end{lstlisting}
 \end{minipage}
 
-(TODO: scegliere se descrivere ogni funzione, oppure fare una descrizione generale.)
 Le altre funzioni del controller funzionano in modo analogo:
+\begin{itemize} 
 
-La funzione \texttt{categories()} si occupa di estrarre dal database l'elenco di tutte delle categorie. Questa funzione è usata quando il client richiede tutte le categorie senza filtrarle per comune.
+\item La funzione \texttt{categories()} 
+si occupa di estrarre dal database l'elenco di tutte delle categorie. Questa funzione è usata quando il client richiede tutte le categorie senza filtrarle per comune.
 
-La funzione \texttt{cities()} effettua una ricerca ricavando l'elenco dei comuni, eliminando le voci duplicate ed ordinadole in redine alfabetico.
+\item La funzione \texttt{cities()} 
+effettua una ricerca ricavando l'elenco dei comuni, eliminando le voci duplicate ed ordinadole in redine alfabetico.
 
-La funzione \texttt{types(comune)} si occupa di verificare se il valore di \texttt{comune} è \emph{tutti i comuni}, in tal caso estrae l'elenco di tutti i tipi, mentre se è selezionato un comune estrae solo quelli presenti in quel comune.
+\item La funzione \texttt{types(comune)} 
+si occupa di verificare se il valore di \texttt{comune} è \emph{tutti i comuni}, in tal caso estrae l'elenco di tutti i tipi, mentre se è selezionato un comune estrae solo quelli presenti in quel comune.
 
-La funzione \texttt{points(comune, tipo)} interroga il database ottenendo l'elenco di locali che soddisfano i termini di ricerca definiti da \texttt{comune} e \texttt{tipo}.
-
+\item La funzione \texttt{points(comune, tipo)} 
+interroga il database ottenendo l'elenco di locali che soddisfano i termini di ricerca definiti da \texttt{comune} e \texttt{tipo}.
+\end{itemize}
 
 \lstinputlisting[label=ls:completo,caption={Codice completo del file \texttt{controllers/root.py}.},language=Python]{ls/root.py}
 
