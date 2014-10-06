@@ -1,9 +1,28 @@
 % !TEX encoding = UTF-8 Unicode
-\documentclass[a4paper,11pt,italian,twoside,openany]{book}   	% use "amsart" instead of "article" for AMSLaTeX format
+\documentclass[a4paper,12pt,italian]{report}   	% use "amsart" instead of "article" for AMSLaTeX format
+
+%Interlinea
+\usepackage{setspace}
+%\onehalfspacing
+\doublespacing
+
+%Margini
+\usepackage[right=2.5cm,left=2.5cm,top=2.5cm,bottom=2.5cm,heightrounded,bindingoffset=5mm]{geometry}
+
+%%Stile della pagina
+%\usepackage{fancyhdr}
+%
+%\pagestyle{fancy}
+%\addtolength{\headwidth}{20pt}
+%\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1} {}}
+%\renewcommand{\sectionmark}[1]{\markright{\thesection \ #1}{}}
+%\cfoot{}
+%\rhead[\fancyplain{}{\bfseries\leftmark}]{\fancyplain{} {\bfseries\thepage}}
+%\lhead[\fancyplain{}{\bfseries\thepage}]{\fancyplain{} {\bfseries\rightmark}}
+
 %\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
 \usepackage[pdftex]{graphicx}			% Use pdf, png, jpg, or epsß with pdflatex; use eps in DVI mode
-								% TeX will automatically convert eps --> pdf in pdflatex	
-								
+								% TeX will automatically convert eps --> pdf in pdflatex						
 \usepackage{caption}
 									
 %\usepackage{amssymb}
@@ -36,9 +55,6 @@
 
 \include{title}
 
-\newpage
-\thispagestyle{empty}
-\mbox{}
 \tableofcontents
 
 %%%%%%%%

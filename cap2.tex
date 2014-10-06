@@ -49,10 +49,10 @@ I database non relazionali, anche detti \emph{NoSQL}, sono una tipologia di data
 La parte di elaborazione è quella più costosa computazionalmente, bisogna quindi prestare attenzione alla struttura dei processi che elaborano i dati. Tutto deve essere calibrato per i grandi numeri che comportano i Big Data, prestando attenzione al tipo di calcoli da effettuare per ogni record, perché potrebbe influire moltissimo sul tempo di computazione totale. Un pattern molto utilizzato, introdotto da Google, è il \emph{Map Reduce}. \label{sec:mapreduce}
 Esso permette di analizzare parallelamente\footnote{Ovviamente solo se l'hardware supporta il parallelismo} i record di uno o più dataset nella fase di \emph{Map} ed unire i risultati nella fase di \emph{Reduce}.
 \begin{figure}[ht!]
-	\caption{Pattern Map Reduce}
 	\label{img:mapreduce}
 	\centering
-		\includegraphics[width=\textwidth]{img/mapreduce.jpg}
+	\includegraphics[width=\textwidth]{img/mapreduce.jpg}
+	\caption{Pattern Map Reduce}
 \end{figure}
 La Figura \ref{img:mapreduce} mostra il principio di funzionamento di un programma che applica Map Reduce. I dati vengono prelevati dai rispettivi dataset e suddivisi tra più macchine che effettuano il Map, in cui viene eseguito del codice per ogni singolo record. In questa fase vengono effettuati tutti i controlli descritti nel paragrafo \ref{sec:acquisizione}. In output si ottengono zero o più coppie chiave valore. Successivamente se sono presenti più unità di reduce i risultati vengono smistati tra di essi. Ogni unità di reduce si occupa di processare le coppie secondo la funzione di reduce, ed effettuano l'effettivo calcolo della statistica desiderata.
 
@@ -83,10 +83,10 @@ MVC consta di tre tipologie di oggetti. Il Model è l'oggetto dell'applicazione,
 \end{quote}
 
 \begin{figure}[ht!]
-	\caption{Pattern MVC}
 	\label{img:mvc}
 	\centering
-		\includegraphics[width=\textwidth]{img/mvc1.png}
+	\includegraphics[width=\textwidth]{img/mvc1.png}
+	\caption{Pattern MVC}
 \end{figure}
 
 Il programma sarà più pulito siccome in ogni sorgente sarà presente solamente il codice che si occupa di uno specifico compito. Non si presenterà quindi una situazione in cui nella stessa parte di codice oltre ad elaborare i dati ci dobbiamo preoccupare di formattarli per la presentazione su schermo, perché sarà compito della \emph{View}. L'aggiunta do nuove funzioni al software è molto semplice, per effettuare delle modifiche è spesso necessario aggiungere poche righe di codice in ogni parte del programma, senza il bisogno di stravolgerne la struttura. Il mantenimento del software risulta più semplice grazie alla suddivisione del codice in base al ruolo ed alla conseguente leggibilità.
@@ -164,10 +164,10 @@ Ming è un'estensione adottata da TG per permettere l'utilizzo di Mongo, mentre 
 
 La struttura tipo di un progetto TurboGears 2 è rappresentata nella figura \ref{fig:progetto}.
 \begin{figure}[ht!]
-	\caption{Struttura di un progetto TG2.}
 	\label{fig:progetto}
 	\centering
 	\includegraphics{img/tg2project.jpg}
+	\caption{Struttura di un progetto TG2.}
 \end{figure}
 
 A seguire verranno descritte alcune delle cartelle più importanti.
@@ -185,7 +185,7 @@ Il flusso di lavoro di TG potrebbe essere riassunto in:
 \item Richiama l'opportuna funzione dell'opportuno controller
 \item La funzione potrebbe interfacciarsi con il database, memorizzare o estrarre dati. 
 
-In essa è sempre definito un \emph{decoratore} riconoscibile con la direttiva \texttt{expose}, con cui si indica alla View quale templare utilizzare. La funzione di un controller viene richiamata nel caso in cui TG riceve una richiesta del tipo \texttt{hostname/func/param1/param2/...}, i valori \texttt{param} sono i parametri della funzione, i dati da passare a Genshi devono essere memorizzati in un oggetto \texttt{dictionary} di python e restituiti dalla funzione. 
+In essa è sempre definito un \emph{decoratore} riconoscibile con la direttiva \texttt{expose}, con cui si indica alla View quale templare utilizzare. La funzione di un controller viene richiamata nel caso in cui TG riceve una richiesta del tipo: \\ \texttt{hostname/func/param1/param2/...} \\ I valori \texttt{param} sono i parametri della funzione, i dati da passare a Genshi devono essere memorizzati in un oggetto \texttt{dictionary} di python e restituiti dalla funzione. 
 \item La view sostituisce i marker con le relative informazioni, infine genera la pagina
 \item La pagina generata viene inviata al client che ha effettuato la richiesta.
 \end{enumerate}
@@ -208,7 +208,7 @@ D3.js è una libreria JavaScript che offre strumenti molto potenti per la visual
 D3.js è un libreria JavaScript per la manipolazione di documenti basati sui dati. D3 fornisce gli strumenti per rappresentare i dati utilizzando HTML, SVG e CSS. D3 si focalizza sugli standard web offrendo tutta la potenza dei browser attuali senza essere dipendenti da un framework proprietario, combinando strumenti di visualizzazione con un approccio \emph{data-driven} per la manipolazione del DOM.
 \end{quotation}
 In pratica D3 permette di modificare il DOM di una pagina web in base ai dati collegati all'applicazione, utilizzando i tag \emph{SVG} di \emph{HTML}, acronimo di \emph{Scalable Vector Graphics}.
-\emph{Protovis}, realizzato dal professor Jeff Heer, Vadim Ogievetsky e Mike Bostock della Stanford University, era una libreria JavaScript capace di creare grafica SVG a partire dai dati. Nel 2011 il suo sviluppo venne interrotto per spostare l'attenzione al suo successore, D3.js, creato dagli stessi tre sviluppatori ed in particolar modo da Mike Bostock, che oltre ad essere più performante si attiene ai più recenti standard web.\footnote{Fonte: \url{http://en.wikipedia.org/wiki/D3.js\#Context}}. 
+\emph{Protovis}, realizzato dal professor Jeff Heer, Vadim Ogievetsky e Mike Bostock della Stanford University, era una libreria JavaScript capace di creare grafica SVG a partire dai dati. Nel 2011 il suo sviluppo venne interrotto per spostare l'attenzione al suo successore, D3.js, creato dagli stessi tre sviluppatori ed in particolar modo da Mike Bostock, che oltre ad essere più performante si attiene ai più recenti standard web\footnote{Fonte: \url{http://en.wikipedia.org/wiki/D3.js\#Context}}. 
 
 Gli standard web sono una serie di regole e \emph{Best Practices} non proprietarie, che definiscono e descrivono gli aspetti del \emph{World Wide Web}. Uno degli enti che si occupa degli standard web è il World Wide Web Consortium o \emph{W3C}, che descrive gli elementi di HTML, CSS, JavaScript e non solo, fornendo spiegazioni esaustive di cono siano, come funzionano ed anche di come si usano. Il sito di W3C è \url{http://www.w3.org/}.
 
