@@ -6,6 +6,11 @@ This is the thesis I wrote for my bachelor degree. It's written in Italian and m
 
 On ubuntu:
 
-`sudo apt install texlive texlive-lang-italian texlive-latex-extra texlive-bibtex-extra`
+`sudo apt install texlive babel texlive-lang-italian texlive-latex-extra texlive-bibtex-extra`
 
-`pdflatex main.tex`
+```bash
+pdflatex main
+babel main
+pdflatex main
+pdflatex main
+```
